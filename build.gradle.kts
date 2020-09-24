@@ -1,18 +1,33 @@
 plugins {
     java
+    id("io.spring.dependency-management") version "1.0.9.RELEASE"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+subprojects {
 
-repositories {
-    mavenCentral()
-}
+    group = "linky"
+    version = "1.0-SNAPSHOT"
 
-dependencies {
-    testCompile("junit", "junit", "4.12")
-}
+    apply(plugin = "java")
+    apply(plugin = "java-library")
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.2.RELEASE"))
+    }
+
+    configure<JavaPluginConvention> {
+        sourceCompatibility = JavaVersion.VERSION_14
+        targetCompatibility = JavaVersion.VERSION_14
+    }
+
+    plugins.withType<JavaPlugin>().configureEach {
+        configure<JavaPluginExtension> {
+            modularity.inferModulePath.set(true)
+        }
+    }
+
 }
