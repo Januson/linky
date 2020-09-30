@@ -1,4 +1,5 @@
 dependencies {
+    implementation("an.awesome:pipelinr:0.5")
     implementation("org.cactoos:cactoos:0.46")
     testImplementation("org.assertj:assertj-core")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
