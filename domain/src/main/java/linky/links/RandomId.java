@@ -16,7 +16,7 @@ public class RandomId implements Text {
     private final Text origin;
 
     public RandomId() {
-        this.origin = new Sub(UUID.randomUUID().toString(), 0, 6);
+        this.origin = new Sub(() -> UUID.randomUUID().toString(), 0, 6);
     }
 
     @Override

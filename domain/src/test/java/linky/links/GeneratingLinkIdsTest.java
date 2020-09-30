@@ -16,4 +16,14 @@ public class GeneratingLinkIdsTest {
         ).hasSize(6);
     }
 
+    @Test
+    void generatedIdsAreDifferent() {
+        final var randomId = new RandomId();
+
+        final var first = new UncheckedText(randomId).asString();
+        final var second = new UncheckedText(randomId).asString();
+
+        assertThat(first).isNotEqualTo(second);
+    }
+
 }
