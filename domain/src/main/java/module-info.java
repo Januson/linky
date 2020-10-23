@@ -1,0 +1,2 @@
+module linky.domain {
+}
