@@ -1,8 +1,8 @@
 package linky.links;
 
-public class Link {
+class Url {
 
-    private Link() {
+    private Url() {
     }
 
     public static class Unvalidated {
@@ -13,14 +13,14 @@ public class Link {
             this.url = null;
         }
 
-        public Link valid() {
+        public Url valid() {
             if (url == null) {
                 throw new ValidationFailed("Link cannot be null!");
             }
             if (url.isEmpty()) {
                 throw new ValidationFailed("Link cannot be empty!");
             }
-            return new Link();
+            return new Url();
         }
 
     }
