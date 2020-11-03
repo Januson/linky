@@ -2,6 +2,7 @@ package linky.events;
 
 import linky.links.LinkVisited;
 import linky.visits.AddNewVisit;
+import linky.visits.NewVisit;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ class LinkVisitedListener {
     @Async
     @EventListener
     void handleAsyncEvent(final LinkVisited event) {
-//        this.visits.add(event);
+        this.visits.add(event);
     }
 
 }

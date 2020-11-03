@@ -23,7 +23,7 @@ class FindLinkTest {
     void linkFound() {
         final var links = new InMemoryLinks();
         final var validName = new Link.Name("unknown");
-        NewLink newLink = new NewLink(validName);
+        NewLink newLink = new NewLink(validName, url);
         links.add(newLink);
         final var events = new DummyEvents();
         final var useCase = new FindLinkUseCase(links, events);

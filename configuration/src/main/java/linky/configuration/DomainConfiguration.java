@@ -8,10 +8,7 @@ import linky.links.LinkVisited;
 import linky.links.Links;
 import linky.links.LinksConfiguration;
 import linky.links.NewLink;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
@@ -48,7 +45,7 @@ public class DomainConfiguration {
 
         @Override
         public void add(NewLink newLink) {
-            this.links.put(newLink.name(), new Link());
+            this.links.put(newLink.name(), new Link(newLink.name(), new Link.Url()));
         }
 
         @Override

@@ -1,6 +1,9 @@
 package linky.persistence.links;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface LinkRepository extends CrudRepository<LinkEntity, Long> {
+import java.util.Optional;
+
+public interface LinkRepository extends JpaRepository<LinkEntity, Long> {
+    Optional<LinkEntity> findByName(String name);
 }
