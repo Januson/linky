@@ -2,6 +2,7 @@
 .idea/
 build/
 out/
+!/adapters/out/
 target/
 
 *.iml

@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":domain"))
     implementation(project(":adapters:in:web"))
     implementation("javax.servlet:javax.servlet-api");
     implementation("org.springframework.boot:spring-boot-starter")

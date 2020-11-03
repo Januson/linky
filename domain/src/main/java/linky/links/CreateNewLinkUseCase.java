@@ -9,8 +9,8 @@ class CreateNewLinkUseCase implements CreateNewLink {
     }
 
     @Override
-    public LinkName create(final NewLink newLink) {
+    public Link.Name create(final NewLink newLink) {
         this.links.add(newLink);
-        return new LinkName();
+        return newLink.name();
     }
 }

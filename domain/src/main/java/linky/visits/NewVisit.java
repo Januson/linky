@@ -2,7 +2,7 @@ package linky.visits;
 
 import java.time.Instant;
 
-final class NewVisit {
+public final class NewVisit {
     private final Instant at = Instant.now();
     private final String origin;
     private final String destination;

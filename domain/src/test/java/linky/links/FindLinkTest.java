@@ -22,13 +22,13 @@ class FindLinkTest {
     @Test
     void linkFound() {
         final var links = new InMemoryLinks();
-        NewLink newLink = new NewLink();
+        final var validName = new Link.Name("unknown");
+        NewLink newLink = new NewLink(validName);
         links.add(newLink);
         final var events = new DummyEvents();
         final var useCase = new FindLinkUseCase(links, events);
-        final var unknownLinkName = new Link.Name("unknown");
 
-        final var link = useCase.findBy(unknownLinkName);
+        final var link = useCase.findBy(validName);
 
         assertThat(link)
             .isPresent()

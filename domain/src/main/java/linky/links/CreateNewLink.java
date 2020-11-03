@@ -1,5 +1,5 @@
 package linky.links;
 
-interface CreateNewLink {
-    LinkName create(final NewLink newLink);
+public interface CreateNewLink {
+    Link.Name create(final NewLink newLink);
 }
