@@ -1,14 +1,16 @@
 package linky.visits;
 
-class FakeVisits implements Visits {
-    private NewVisit lastVisit;
+import linky.links.LinkVisited;
 
-    public NewVisit lastVisit() {
+class FakeVisits implements Visits {
+    private LinkVisited lastVisit;
+
+    public LinkVisited lastVisit() {
         return this.lastVisit;
     }
 
     @Override
-    public void add(NewVisit newVisit) {
+    public void add(LinkVisited newVisit) {
         this.lastVisit = newVisit;
     }
 }

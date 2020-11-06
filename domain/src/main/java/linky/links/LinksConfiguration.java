@@ -12,4 +12,8 @@ public class LinksConfiguration {
         return new FindLinkUseCase(links, events);
     }
 
+    public FindAllLinks findAllLinks(final Links links) {
+        return new FindAllLinksUseCase(links);
+    }
+
 }

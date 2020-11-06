@@ -14,10 +14,7 @@ class LinkEntity {
     @GeneratedValue
     private Long id;
 
-    @Column(
-        unique = true,
-        nullable = false
-    )
+    @Column
     private String name;
 
     @Column

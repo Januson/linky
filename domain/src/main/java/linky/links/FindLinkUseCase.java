@@ -22,6 +22,6 @@ class FindLinkUseCase implements FindLink {
     }
 
     private void fireVisitedEvent(final Link.Name linkName) {
-        this.events.fire(new LinkVisited(linkName));
+        this.events.fire(new LinkVisited(new Ip(), linkName));
     }
 }

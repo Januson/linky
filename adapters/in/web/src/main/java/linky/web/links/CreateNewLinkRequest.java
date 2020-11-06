@@ -1,4 +1,4 @@
-package linky.adapter.web.links;
+package linky.web.links;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

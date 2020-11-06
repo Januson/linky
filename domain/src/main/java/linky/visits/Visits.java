@@ -1,5 +1,7 @@
 package linky.visits;
 
+import linky.links.LinkVisited;
+
 interface Visits {
-    void add(NewVisit newVisit);
+    void add(LinkVisited newVisit);
 }

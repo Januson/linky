@@ -1,4 +1,4 @@
-package linky.adapter.web.links;
+package linky.web.links;
 
 import linky.links.CreateNewLink;
 import linky.links.Link;
@@ -28,9 +28,10 @@ class CreateNewLinkEndpoint {
         produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<String> findLinkInfo(@RequestBody CreateNewLinkRequest request) {
         final var linkName = this.useCase.create(
-            new NewLink(new Link.Name(request.getName()), url)
-        );
-        final var location = URI.create("/links/"+linkName.toString());
+            new NewLink(
+                new Link.Name(request.getName()),
+                new Link.Url(request.getUrl())));
+        final var location = URI.create("/links/" + linkName.toString());
         return ResponseEntity.created(location).build();
     }
 

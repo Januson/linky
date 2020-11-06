@@ -6,6 +6,7 @@ import linky.links.NewLink;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Component
 class LinkPersistenceAdapter implements Links {
@@ -28,6 +29,12 @@ class LinkPersistenceAdapter implements Links {
     public Optional<Link> findBy(final Link.Name linkName) {
         return this.links
             .findByName(linkName.toString())
+            .map(this.mapper::toDomainEntity);
+    }
+
+    @Override
+    public Stream<Link> all() {
+        return this.links.findAll().stream()
             .map(this.mapper::toDomainEntity);
     }
 

@@ -1,5 +1,7 @@
 package linky.visits;
 
+import linky.links.LinkVisited;
+
 final class AddANewVisit implements AddNewVisit {
     private final Visits visits;
 
@@ -8,7 +10,7 @@ final class AddANewVisit implements AddNewVisit {
     }
 
     @Override
-    public void add(final NewVisit newVisit) {
+    public void add(final LinkVisited newVisit) {
         this.visits.add(newVisit);
     }
 }

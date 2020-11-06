@@ -16,6 +16,10 @@ public class Link {
         return this.url;
     }
 
+    public Name name() {
+        return this.name;
+    }
+
     public static class Url {
         private final String text;
 
