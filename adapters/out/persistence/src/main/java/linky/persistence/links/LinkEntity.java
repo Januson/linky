@@ -20,7 +20,7 @@ class LinkEntity {
     @Column
     private String url;
 
-    LinkEntity() {
+    protected LinkEntity() {
     }
 
     LinkEntity(final String name, final String url) {

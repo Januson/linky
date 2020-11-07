@@ -23,16 +23,17 @@ class FindLinkTest {
     void linkFound() {
         final var links = new InMemoryLinks();
         final var validName = new Link.Name("unknown");
-        NewLink newLink = new NewLink(validName, url);
+        NewLink newLink = new NewLink(validName, new Link.Url("test_url"));
         links.add(newLink);
-        final var events = new DummyEvents();
+        final Events<LinkVisited> events = (event) -> {};
         final var useCase = new FindLinkUseCase(links, events);
 
         final var link = useCase.findBy(validName);
 
         assertThat(link)
             .isPresent()
-            .isEqualTo(newLink);
+            .map(Link::name)
+            .hasValue(newLink.name());
     }
 
     private static class DummyEvents implements Events<LinkVisited> {
