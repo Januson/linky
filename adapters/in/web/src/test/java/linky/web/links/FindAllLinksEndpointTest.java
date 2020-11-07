@@ -2,6 +2,8 @@ package linky.web.links;
 
 import linky.links.FindAllLinks;
 import linky.links.Link;
+import linky.links.Name;
+import linky.links.Url;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,9 +38,9 @@ class FindAllLinksEndpointTest {
 
     private List<Link> links() {
         return List.of(
-            new Link(new Link.Name("test_name_1"), new Link.Url("test_url_1")),
-            new Link(new Link.Name("test_name_2"), new Link.Url("test_url_2")),
-            new Link(new Link.Name("test_name_3"), new Link.Url("test_url_3"))
+            new Link(new Name("test_name_1"), new Url("test_url_1")),
+            new Link(new Name("test_name_2"), new Url("test_url_2")),
+            new Link(new Name("test_name_3"), new Url("test_url_3"))
         );
     }
 

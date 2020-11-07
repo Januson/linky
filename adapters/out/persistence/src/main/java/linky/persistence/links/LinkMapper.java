@@ -1,20 +1,22 @@
 package linky.persistence.links;
 
 import linky.links.Link;
+import linky.links.Name;
 import linky.links.NewLink;
+import linky.links.Url;
 import org.springframework.stereotype.Component;
 
 @Component
 class LinkMapper {
 
-    Link toDomainEntity(LinkEntity link) {
+    Link toDomainEntity(final LinkEntity link) {
         return new Link(
-            new Link.Name(link.getName()),
-            new Link.Url(link.getUrl())
+            new Name(link.getName()),
+            new Url(link.getUrl())
         );
     }
 
-    LinkEntity toJpaEntity(NewLink link) {
+    LinkEntity toJpaEntity(final NewLink link) {
         return new LinkEntity(
             link.name().toString(),
             link.url().toString()

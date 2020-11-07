@@ -1,7 +1,9 @@
 package linky.persistence.links;
 
 import linky.links.Link;
+import linky.links.Name;
 import linky.links.NewLink;
+import linky.links.Url;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,20 +27,20 @@ class LinkPersistenceAdapterTest {
     @Test
     @Sql("PreexistingLinks.sql")
     void findsALink() {
-        final Optional<Link> link = this.adapter.findBy(new Link.Name("ggl"));
+        final Optional<Link> link = this.adapter.findBy(new Name("ggl"));
 
         assertThat(link)
             .map(Link::url)
-            .hasValue(new Link.Url("www.google.com"));
+            .hasValue(new Url("www.google.com"));
     }
 
     @Test
     void createsALink() {
-        assertThat(this.links.count()).isEqualTo(0);
+        assertThat(this.links.count()).isZero();
 
-        final Link.Name name = new Link.Name("stckowfl");
+        final Name name = new Name("stckowfl");
         final NewLink link = new NewLink(
-            name, new Link.Url("www.stackoverflow.com"));
+            name, new Url("www.stackoverflow.com"));
 
         adapter.add(link);
 

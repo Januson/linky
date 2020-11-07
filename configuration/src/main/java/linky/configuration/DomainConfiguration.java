@@ -23,11 +23,6 @@ public class DomainConfiguration {
     private final LinksConfiguration links = new LinksConfiguration();
 
     @Bean
-    Links inMemoryLinks() {
-        return new InMemoryLinks();
-    }
-
-    @Bean
     Events<LinkVisited> events() {
         return new FakeEvents();
     }
@@ -47,27 +42,7 @@ public class DomainConfiguration {
         return this.links.findAllLinks(links);
     }
 
-    static class InMemoryLinks implements Links {
-
-        private final Map<Link.Name, Link> links = new HashMap<>();
-
-        @Override
-        public void add(NewLink newLink) {
-            this.links.put(newLink.name(), new Link(newLink.name(), new Link.Url("")));
-        }
-
-        @Override
-        public Optional<Link> findBy(Link.Name linkName) {
-            return Optional.ofNullable(this.links.get(linkName));
-        }
-
-        @Override
-        public Stream<Link> all() {
-            return this.links.values().stream();
-        }
-    }
-
-    class FakeEvents implements Events<LinkVisited> {
+    static class FakeEvents implements Events<LinkVisited> {
 
         @Override
         public void fire(LinkVisited event) {

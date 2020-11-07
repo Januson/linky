@@ -2,6 +2,7 @@ package linky.web.links;
 
 import linky.links.FindLink;
 import linky.links.Link;
+import linky.links.Name;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,7 @@ public class FindLinkEndpoint {
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LinkDto> findByName(@PathVariable String name) {
-        return this.useCase.findBy(new Link.Name(name))
+        return this.useCase.findBy(new Name(name))
             .map(this::ok)
             .orElseThrow(() -> notFound(name));
     }

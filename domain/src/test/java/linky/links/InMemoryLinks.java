@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 class InMemoryLinks implements Links {
 
-    private final Map<Link.Name, Link> links = new HashMap<>();
+    private final Map<Name, Link> links = new HashMap<>();
 
     @Override
     public void add(NewLink newLink) {
@@ -19,7 +19,7 @@ class InMemoryLinks implements Links {
     }
 
     @Override
-    public Optional<Link> findBy(Link.Name linkName) {
+    public Optional<Link> findBy(Name linkName) {
         return Optional.ofNullable(this.links.get(linkName));
     }
 

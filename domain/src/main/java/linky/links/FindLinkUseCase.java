@@ -15,13 +15,13 @@ class FindLinkUseCase implements FindLink {
     }
 
     @Override
-    public Optional<Link> findBy(final Link.Name linkName) {
+    public Optional<Link> findBy(final Name linkName) {
         final var link = this.links.findBy(linkName);
         link.ifPresent(l -> fireVisitedEvent(linkName));
         return link;
     }
 
-    private void fireVisitedEvent(final Link.Name linkName) {
+    private void fireVisitedEvent(final Name linkName) {
         this.events.fire(new LinkVisited(new Ip(), linkName));
     }
 }

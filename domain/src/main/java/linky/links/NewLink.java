@@ -2,19 +2,20 @@ package linky.links;
 
 public class NewLink {
 
-    private final Link.Name name;
-    private final Link.Url url;
+    private final Name name;
+    private final Url url;
 
-    public NewLink(final Link.Name name, final Link.Url url) {
+    public NewLink(final Name name, final Url url) {
         this.name = name;
         this.url = url;
     }
 
-    public Link.Name name() {
+    public Name name() {
         return this.name;
     }
 
-    public Link.Url url() {
+    public Url url() {
         return this.url;
     }
+
 }

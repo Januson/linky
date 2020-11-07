@@ -2,6 +2,7 @@ package linky.persistence.links;
 
 import linky.links.Link;
 import linky.links.Links;
+import linky.links.Name;
 import linky.links.NewLink;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,7 @@ class LinkPersistenceAdapter implements Links {
     }
 
     @Override
-    public Optional<Link> findBy(final Link.Name linkName) {
+    public Optional<Link> findBy(final Name linkName) {
         return this.links
             .findByName(linkName.toString())
             .map(this.mapper::toDomainEntity);

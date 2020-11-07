@@ -12,7 +12,7 @@ class FindLinkTest {
         final var links = new InMemoryLinks();
         final var events = new DummyEvents();
         final var useCase = new FindLinkUseCase(links, events);
-        final var unknownLinkName = new Link.Name("unknown");
+        final var unknownLinkName = new Name("unknown");
 
         final var link = useCase.findBy(unknownLinkName);
 
@@ -22,8 +22,8 @@ class FindLinkTest {
     @Test
     void linkFound() {
         final var links = new InMemoryLinks();
-        final var validName = new Link.Name("unknown");
-        NewLink newLink = new NewLink(validName, new Link.Url("test_url"));
+        final var validName = new Name("unknown");
+        NewLink newLink = new NewLink(validName, new Url("test_url"));
         links.add(newLink);
         final Events<LinkVisited> events = (event) -> {};
         final var useCase = new FindLinkUseCase(links, events);

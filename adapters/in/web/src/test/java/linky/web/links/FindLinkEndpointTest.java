@@ -2,6 +2,8 @@ package linky.web.links;
 
 import linky.links.FindLink;
 import linky.links.Link;
+import linky.links.Name;
+import linky.links.Url;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = FindLinkEndpoint.class)
-public class FindLinkEndpointTest {
+class FindLinkEndpointTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,9 +30,9 @@ public class FindLinkEndpointTest {
     private FindLink findLink;
 
     @Test
-    public void existingLinkCanBeFound() throws Exception {
+    void existingLinkCanBeFound() throws Exception {
         final var expectedLink = "test_name";
-        final var expectedLinkName = new Link.Name(expectedLink);
+        final var expectedLinkName = new Name(expectedLink);
         given(this.findLink.findBy(expectedLinkName))
             .willReturn(existingLink(expectedLinkName));
 
@@ -44,9 +46,9 @@ public class FindLinkEndpointTest {
     }
 
     @Test
-    public void linkNotFound() throws Exception {
+    void linkNotFound() throws Exception {
         final var unknownLinkName = "test_name";
-        given(this.findLink.findBy(any(Link.Name.class)))
+        given(this.findLink.findBy(any(Name.class)))
             .willReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/links/{name}", unknownLinkName)
@@ -58,9 +60,9 @@ public class FindLinkEndpointTest {
                     not(emptyOrNullString())));
     }
 
-    private Optional<Link> existingLink(final Link.Name name) {
+    private Optional<Link> existingLink(final Name name) {
         return Optional.of(
-            new Link(name, new Link.Url("test_url"))
+            new Link(name, new Url("test_url"))
         );
     }
 

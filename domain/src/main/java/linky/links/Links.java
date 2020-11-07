@@ -8,7 +8,7 @@ public interface Links {
 
     void add(final NewLink newLink);
 
-    Optional<Link> findBy(Link.Name linkName);
+    Optional<Link> findBy(Name linkName);
 
     Stream<Link> all();
 

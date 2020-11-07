@@ -6,9 +6,9 @@ public class LinkVisited {
 
     private final Instant at = Instant.now();
     private final Ip origin;
-    private final Link.Name destination;
+    private final Name destination;
 
-    public LinkVisited(final Ip origin, final Link.Name destination) {
+    public LinkVisited(final Ip origin, final Name destination) {
         this.origin = origin;
         this.destination = destination;
     }
