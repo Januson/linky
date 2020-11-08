@@ -1,21 +1,9 @@
 package linky.configuration;
 
 import linky.infrastructure.Events;
-import linky.links.CreateNewLink;
-import linky.links.FindAllLinks;
-import linky.links.FindLink;
-import linky.links.Link;
-import linky.links.LinkVisited;
-import linky.links.Links;
-import linky.links.LinksConfiguration;
-import linky.links.NewLink;
+import linky.links.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Configuration
 public class DomainConfiguration {
@@ -28,8 +16,8 @@ public class DomainConfiguration {
     }
 
     @Bean
-    CreateNewLink createNewLink(final Links links) {
-        return this.links.createNewLink(links);
+    CreateNewLink createNewLink(final Links links, final IsNameUsed isNameUsed) {
+        return this.links.createNewLink(links, isNameUsed);
     }
 
     @Bean

@@ -4,8 +4,8 @@ import linky.infrastructure.Events;
 
 public class LinksConfiguration {
 
-    public CreateNewLink createNewLink(final Links links) {
-        return new CreateNewLinkUseCase(links);
+    public CreateNewLink createNewLink(final Links links, final IsNameUsed isNameUsed) {
+        return new CreateNewLinkUseCase(links, isNameUsed);
     }
 
     public FindLink findLink(final Links links, final Events<LinkVisited> events) {

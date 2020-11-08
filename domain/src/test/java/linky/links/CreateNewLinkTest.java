@@ -12,48 +12,51 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CreateNewLinkTest {
 
+    public static final String VALID_URL = "https://www.google.com";
+    public static final IsNameUsed IS_NAME_IN_USE = name -> false;
+
     @Test
     void createWithCustomName() {
         final var links = new FakeLinks();
-        final var useCase = new CreateNewLinkUseCase(links);
+        final var useCase = createUseCase(links);
         final var expectedName = "test-name";
 
         final var linkName = useCase.create(
-            new NewLink(
-                new Name.Unvalidated(expectedName),
-                new Url.Unvalidated("https://www.google.com")));
+            createNewLink(VALID_URL, expectedName));
 
         assertThat(linkName)
             .hasToString(expectedName);
+        assertThat(links.size())
+            .isPositive();
     }
 
     @Test
     void createWithRandomName() {
         final var links = new FakeLinks();
-        final var useCase = new CreateNewLinkUseCase(links);
+        final var useCase = createUseCase(links);
 
         final var link = useCase.create(
-            new NewLink(
-                new Name.Unvalidated("test-name"),
-                new Url.Unvalidated("https://www.google.com")));
+            createNewLink(VALID_URL, "test-name"));
 
         assertThat(link)
             .isNotNull();
         assertThat(link.toString())
             .hasSizeGreaterThan(0);
+        assertThat(links.size())
+            .isPositive();
     }
 
     @ParameterizedTest
     @MethodSource("abusiveNames")
     void abusiveNamesAreRejected(final String name) {
         final var links = new FakeLinks();
-        final var useCase = new CreateNewLinkUseCase(links);
-        final var newLink = new NewLink(
-            new Name.Unvalidated(name),
-            new Url.Unvalidated("https://www.google.com"));
+        final var useCase = createUseCase(links);
+        final var newLink = createNewLink(VALID_URL, name);
 
         assertThatThrownBy(() -> useCase.create(newLink))
             .isInstanceOf(Name.NameIsAbusive.class);
+        assertThat(links.size())
+            .isZero();
     }
 
     private static Stream<String> abusiveNames() {
@@ -63,18 +66,30 @@ class CreateNewLinkTest {
         );
     }
 
+    @Test
+    void duplicateNamesAreRejected() {
+        final var links = new FakeLinks();
+        final var useCase = createUseCase(links, name -> true);
+        final var newLink = createNewLink(VALID_URL, "name");
+
+        assertThatThrownBy(() -> useCase.create(newLink))
+            .isInstanceOf(Name.NameAlreadyInUse.class);
+        assertThat(links.size())
+            .isZero();
+    }
+
     @ParameterizedTest
     @MethodSource("malformedUrls")
     void rejectsMalformedLinks(final String url) {
         final var links = new FakeLinks();
-        final var useCase = new CreateNewLinkUseCase(links);
+        final var useCase = createUseCase(links);
 
-        final var newLink = new NewLink(
-            new Name.Unvalidated("test-name"),
-            new Url.Unvalidated(url));
+        final var newLink = createNewLink(url, "test-name");
 
         assertThatThrownBy(() -> useCase.create(newLink))
             .isInstanceOf(Url.MalformedUrl.class);
+        assertThat(links.size())
+            .isZero();
     }
 
     private static Stream<String> malformedUrls() {
@@ -87,9 +102,29 @@ class CreateNewLinkTest {
         );
     }
 
+    private CreateNewLinkUseCase createUseCase(final FakeLinks links) {
+        return createUseCase(links, IS_NAME_IN_USE);
+    }
+
+    private CreateNewLinkUseCase createUseCase(final FakeLinks links,
+                                               final IsNameUsed isNameInUse) {
+        return new CreateNewLinkUseCase(links, isNameInUse);
+    }
+
+    private NewLink createNewLink(final String url, final String s) {
+        return new NewLink(
+            new Name.Unvalidated(s),
+            new Url.Unvalidated(url));
+    }
+
     private static class FakeLinks implements Links {
+
+        private int count = 0;
+
         @Override
-        public void add(final Link newLink) {}
+        public void add(final Link newLink) {
+            this.count++;
+        }
 
         @Override
         public Optional<Link> findBy(final Name linkName) {
@@ -100,6 +135,11 @@ class CreateNewLinkTest {
         public Stream<Link> all() {
             return Stream.empty();
         }
+
+        public long size() {
+            return this.count;
+        }
+
     }
 
 }

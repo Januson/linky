@@ -2,7 +2,6 @@ package linky.persistence.links;
 
 import linky.links.Link;
 import linky.links.Name;
-import linky.links.NewLink;
 import linky.links.Url;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +45,16 @@ class LinkPersistenceAdapterTest {
 
         assertThat(this.links.count()).isEqualTo(1);
         assertThat(this.links.findByName(name.toString())).isPresent();
+    }
+
+    @Test
+    @Sql("PreexistingLinks.sql")
+    void linkNameInUse() {
+        final boolean nameInUse = this.adapter.isInUse("ggl");
+        assertThat(nameInUse).isTrue();
+
+        final boolean uniqueName = this.adapter.isInUse("ggl2");
+        assertThat(uniqueName).isFalse();
     }
 
 }

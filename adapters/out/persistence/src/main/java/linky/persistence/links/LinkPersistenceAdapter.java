@@ -1,16 +1,16 @@
 package linky.persistence.links;
 
+import linky.links.IsNameUsed;
 import linky.links.Link;
 import linky.links.Links;
 import linky.links.Name;
-import linky.links.NewLink;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.stream.Stream;
 
 @Component
-class LinkPersistenceAdapter implements Links {
+class LinkPersistenceAdapter implements Links, IsNameUsed {
 
     private final LinkRepository links;
     private final LinkMapper mapper;
@@ -39,4 +39,8 @@ class LinkPersistenceAdapter implements Links {
             .map(this.mapper::toDomainEntity);
     }
 
+    @Override
+    public boolean isInUse(final String name) {
+        return this.links.existsByName(name);
+    }
 }

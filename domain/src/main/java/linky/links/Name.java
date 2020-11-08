@@ -81,4 +81,25 @@ public class Name {
         }
     }
 
+    static class IsUnique implements Validator<Name> {
+        private final IsNameUsed isNameUsed;
+
+        IsUnique(final IsNameUsed isNameUsed) {
+            this.isNameUsed = isNameUsed;
+        }
+
+        @Override
+        public void test(final String text) {
+            if (this.isNameUsed.isInUse(text)) {
+                throw new NameAlreadyInUse(text);
+            }
+        }
+    }
+
+    static class NameAlreadyInUse extends RuntimeException {
+        public NameAlreadyInUse(final String name) {
+            super(String.format("Link names have to be unique. [%s] is already in use!", name));
+        }
+    }
+
 }
