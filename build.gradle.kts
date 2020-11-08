@@ -3,6 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     checkstyle
+    jacoco
     java
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
     id("org.sonarqube") version "3.0"
@@ -17,13 +18,28 @@ sonarqube {
     }
 }
 
-subprojects {
-
+allprojects {
     group = "linky"
     version = "1.0-SNAPSHOT"
 
-    apply(plugin = "checkstyle")
     apply(plugin = "java")
+    apply(plugin = "jacoco")
+
+    jacoco {
+        toolVersion = "0.8.6"
+    }
+
+    tasks.jacocoTestReport {
+        dependsOn(tasks.test)
+        reports {
+            xml.isEnabled = true
+        }
+    }
+
+}
+
+subprojects {
+    apply(plugin = "checkstyle")
     apply(plugin = "java-library")
 
     repositories {
@@ -49,7 +65,11 @@ subprojects {
         toolVersion = "8.36.2"
     }
 
+
+
     tasks.test {
+        finalizedBy(tasks.jacocoTestReport)
+
         useJUnitPlatform()
 
         testLogging {
