@@ -89,7 +89,7 @@ subprojects {
                 forEach { test -> logger.lifecycle("\t\t${test.displayName()}") }
             }
 
-            private fun TestDescriptor.displayName() = parent?.let { "${it.name} - $name" } ?: "$name"
+            private fun TestDescriptor.displayName() = parent?.let { "${it.name} - $name" } ?: name
         })
     }
 
