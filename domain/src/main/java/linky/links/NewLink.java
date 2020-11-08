@@ -1,20 +1,22 @@
 package linky.links;
 
+import java.util.Optional;
+
 public class NewLink {
 
-    private final Name name;
-    private final Url url;
+    private final Name.Unvalidated name;
+    private final Url.Unvalidated url;
 
-    public NewLink(final Name name, final Url url) {
+    public NewLink(final Name.Unvalidated name, final Url.Unvalidated url) {
         this.name = name;
         this.url = url;
     }
 
-    public Name name() {
-        return this.name;
+    public Optional<Name.Unvalidated> name() {
+        return Optional.ofNullable(this.name);
     }
 
-    public Url url() {
+    public Url.Unvalidated url() {
         return this.url;
     }
 

@@ -10,11 +10,7 @@ class InMemoryLinks implements Links {
     private final Map<Name, Link> links = new HashMap<>();
 
     @Override
-    public void add(NewLink newLink) {
-        final var link = new Link(
-                newLink.name(),
-                newLink.url()
-        );
+    public void add(final Link link) {
         this.links.put(link.name(), link);
     }
 

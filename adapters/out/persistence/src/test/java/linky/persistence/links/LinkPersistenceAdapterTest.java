@@ -39,7 +39,7 @@ class LinkPersistenceAdapterTest {
         assertThat(this.links.count()).isZero();
 
         final Name name = new Name("stckowfl");
-        final NewLink link = new NewLink(
+        final Link link = new Link(
             name, new Url("www.stackoverflow.com"));
 
         adapter.add(link);

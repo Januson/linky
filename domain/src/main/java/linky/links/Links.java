@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public interface Links {
 
-    void add(final NewLink newLink);
+    void add(final Link newLink);
 
     Optional<Link> findBy(Name linkName);
 

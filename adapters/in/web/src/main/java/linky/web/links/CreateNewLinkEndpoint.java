@@ -27,8 +27,8 @@ class CreateNewLinkEndpoint {
     public ResponseEntity<String> findLinkInfo(@RequestBody CreateNewLinkRequest request) {
         final var linkName = this.useCase.create(
             new NewLink(
-                new Name(request.getName()),
-                new Url(request.getUrl())));
+                new Name.Unvalidated(request.getName()),
+                new Url.Unvalidated(request.getUrl())));
         final var location = URI.create("/links/" + linkName.toString());
         return ResponseEntity.created(location).build();
     }

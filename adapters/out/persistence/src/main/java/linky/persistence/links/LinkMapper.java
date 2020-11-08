@@ -16,7 +16,7 @@ class LinkMapper {
         );
     }
 
-    LinkEntity toJpaEntity(final NewLink link) {
+    LinkEntity toJpaEntity(final Link link) {
         return new LinkEntity(
             link.name().toString(),
             link.url().toString()

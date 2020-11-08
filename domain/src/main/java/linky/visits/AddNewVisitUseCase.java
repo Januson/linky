@@ -2,10 +2,10 @@ package linky.visits;
 
 import linky.links.LinkVisited;
 
-final class AddANewVisit implements AddNewVisit {
+final class AddNewVisitUseCase implements AddNewVisit {
     private final Visits visits;
 
-    public AddANewVisit(final Visits visits) {
+    public AddNewVisitUseCase(final Visits visits) {
         this.visits = visits;
     }
 

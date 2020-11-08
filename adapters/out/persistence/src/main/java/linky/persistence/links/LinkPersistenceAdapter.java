@@ -22,7 +22,7 @@ class LinkPersistenceAdapter implements Links {
     }
 
     @Override
-    public void add(final NewLink newLink) {
+    public void add(final Link newLink) {
         this.links.save(this.mapper.toJpaEntity(newLink));
     }
 
