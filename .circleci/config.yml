@@ -16,12 +16,12 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-      - run: gradle test
+#      - run: gradle test
+      - run: gradle sonarqube -Dsonar.verbose=true
 
 
 workflows:
   version: 2
   pipeline:
     jobs:
-      - build
       - test

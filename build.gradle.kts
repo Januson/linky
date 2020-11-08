@@ -5,6 +5,16 @@ plugins {
     checkstyle
     java
     id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    id("org.sonarqube") version "3.0"
+}
+
+sonarqube {
+    properties {
+        properties["sonar.host.url"] = "https://sonarcloud.io"
+        properties["sonar.organization"] = "januson-github"
+        properties["sonar.projectKey"] = "linky"
+        properties["sonar.login"] = System.getenv("SONAR_TOKEN")
+    }
 }
 
 subprojects {
