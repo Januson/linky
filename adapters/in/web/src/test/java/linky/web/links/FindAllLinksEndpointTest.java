@@ -26,7 +26,7 @@ class FindAllLinksEndpointTest {
     private FindAllLinks useCase;
 
     @Test
-    void existingLinksCAnBeFound() throws Exception {
+    void existingLinksCanBeFound() throws Exception {
         given(useCase.all()).willReturn(links());
 
         mockMvc.perform(get("/links")

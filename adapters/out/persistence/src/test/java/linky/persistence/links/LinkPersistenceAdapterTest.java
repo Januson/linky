@@ -25,7 +25,7 @@ class LinkPersistenceAdapterTest {
 
     @Test
     @Sql("PreexistingLinks.sql")
-    void findsALink() {
+    void findsExistingLink() {
         final Optional<Link> link = this.adapter.findBy(new Name("ggl"));
 
         assertThat(link)
@@ -34,7 +34,7 @@ class LinkPersistenceAdapterTest {
     }
 
     @Test
-    void createsALink() {
+    void storesNewLink() {
         assertThat(this.links.count()).isZero();
 
         final Name name = new Name("stckowfl");

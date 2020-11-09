@@ -1,6 +1,9 @@
 package linky.web.links;
 
-import linky.links.*;
+import linky.links.CreateNewLink;
+import linky.links.Name;
+import linky.links.NewLink;
+import linky.links.Url;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

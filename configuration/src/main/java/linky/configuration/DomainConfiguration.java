@@ -1,7 +1,13 @@
 package linky.configuration;
 
 import linky.infrastructure.Events;
-import linky.links.*;
+import linky.links.CreateNewLink;
+import linky.links.FindAllLinks;
+import linky.links.FindLink;
+import linky.links.IsNameUsed;
+import linky.links.LinkVisited;
+import linky.links.Links;
+import linky.links.LinksConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
