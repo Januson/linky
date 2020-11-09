@@ -5,7 +5,7 @@ plugins {
     checkstyle
     jacoco
     java
-    id("io.spring.dependency-management") version "1.0.9.RELEASE"
+    id("io.spring.dependency-management") version "1.0.10.RELEASE"
     id("org.sonarqube") version "3.0"
 }
 
@@ -47,7 +47,7 @@ subprojects {
     }
 
     dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.2.RELEASE"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:2.3.5.RELEASE"))
     }
 
     configure<JavaPluginConvention> {
