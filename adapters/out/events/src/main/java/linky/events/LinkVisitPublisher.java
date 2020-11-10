@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 import static java.util.Objects.requireNonNull;
 
 @Component
-class Publisher implements Events<LinkVisited> {
+class LinkVisitPublisher implements Events<LinkVisited> {
 
     private final ApplicationEventPublisher publisher;
 
-    Publisher(final ApplicationEventPublisher publisher) {
+    LinkVisitPublisher(final ApplicationEventPublisher publisher) {
         this.publisher = requireNonNull(publisher);
     }
 
