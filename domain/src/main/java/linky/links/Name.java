@@ -75,7 +75,7 @@ public class Name {
         }
     }
 
-    static class NameIsAbusive extends RuntimeException {
+    public static class NameIsAbusive extends RuntimeException {
         public NameIsAbusive(final String name) {
             super(String.format("Abusive names: [%s] are not allowed!", name));
         }
@@ -96,7 +96,7 @@ public class Name {
         }
     }
 
-    static class NameAlreadyInUse extends RuntimeException {
+    public static class NameAlreadyInUse extends RuntimeException {
         public NameAlreadyInUse(final String name) {
             super(String.format("Link names have to be unique. [%s] is already in use!", name));
         }

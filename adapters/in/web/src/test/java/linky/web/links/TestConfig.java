@@ -1,4 +1,4 @@
-package linky.web;
+package linky.web.links;
 
 import linky.links.CreateNewLink;
 import linky.links.FindAllLinks;
@@ -9,11 +9,13 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @TestConfiguration
 @SpringBootConfiguration
 @ComponentScan("linky.web")
 @EnableAutoConfiguration
+@EnableWebMvc
 public class TestConfig {
 
     @MockBean

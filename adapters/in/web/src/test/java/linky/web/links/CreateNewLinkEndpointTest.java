@@ -1,67 +1,126 @@
-//package linky.web.links;
-//
-//import linky.links.CreateNewLink;
-//import linky.links.FindLink;
-//import linky.links.Link;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-//import org.springframework.http.MediaType;
-//import org.springframework.test.web.servlet.MockMvc;
-//import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-//
-//import java.util.Optional;
-//
-//import static org.hamcrest.Matchers.emptyOrNullString;
-//import static org.hamcrest.Matchers.not;
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.BDDMockito.given;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-//
-//@WebMvcTest(controllers = CreateNewLinkEndpoint.class)
-//public class CreateNewLinkEndpointTest {
-//
-//    @Autowired
-//    private MockMvc mockMvc;
-//    @Autowired
-//    private CreateNewLink createNewLink;
-//
-//    @Test
-//    public void existingLinkCanBeFound() throws Exception {
-//        final var expectedLink = "test_name";
-//        final var expectedLinkName = new Link.Name(expectedLink);
-//        given(this.findLink.findBy(expectedLinkName))
-//            .willReturn(existingLink(expectedLinkName));
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/links/{name}", expectedLinkName)
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .accept(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isOk())
-//            .andExpect(
-//                content().string(
-//                    not(emptyOrNullString())));
-//    }
-//
-//    @Test
-//    public void linkNotFound() throws Exception {
-//        final var unknownLinkName = "test_name";
-//        given(this.findLink.findBy(any(Link.Name.class)))
-//            .willReturn(Optional.empty());
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/links/{name}", unknownLinkName)
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .accept(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isNotFound())
-//            .andExpect(
-//                content().string(
-//                    not(emptyOrNullString())));
-//    }
-//
-//    private Optional<Link> existingLink(final Link.Name name) {
-//        return Optional.of(
-//            new Link(name, new Link.Url("test_url"))
-//        );
-//    }
-//
-//}
+package linky.web.links;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import linky.links.CreateNewLink;
+import linky.links.FindLink;
+import linky.links.Link;
+import linky.links.Name;
+import linky.links.NewLink;
+import linky.links.Url;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.Optional;
+
+import static org.hamcrest.Matchers.emptyOrNullString;
+import static org.hamcrest.Matchers.not;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@ExtendWith(SpringExtension.class)
+@WebMvcTest
+@Import({ExceptionHandlerAdvice.class})
+class CreateNewLinkEndpointTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private CreateNewLink createNewLink;
+
+    @BeforeEach
+    void setUp() {
+    }
+
+    @Test
+    void created() throws Exception {
+        final var newLinkName = new Name("test_name");
+        given(this.createNewLink.create(any(NewLink.class)))
+            .willReturn(newLinkName);
+
+        final var request = new CreateNewLinkRequest("www.test.test", null);
+
+        mockMvc.perform(post("/links")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(asJson(request))
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated())
+            .andExpect(
+                content().string(
+                    not(emptyOrNullString())));
+    }
+
+    public static String asJson(final CreateNewLinkRequest request) {
+        try {
+            return new ObjectMapper()
+                .writerFor(CreateNewLinkRequest.class)
+                .writeValueAsString(request);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    void duplicateName() throws Exception {
+        given(this.createNewLink.create(any(NewLink.class)))
+            .willThrow(new Name.NameAlreadyInUse("test_name"));
+
+        final var request = new CreateNewLinkRequest("www.test.test", "test_name");
+
+        mockMvc.perform(post("/links")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(asJson(request))
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isConflict())
+            .andExpect(
+                content().string(
+                    not(emptyOrNullString())));
+    }
+
+    @Test
+    void abusiveName() throws Exception {
+        given(this.createNewLink.create(any(NewLink.class)))
+            .willThrow(new Name.NameIsAbusive("test_name"));
+
+        final var request = new CreateNewLinkRequest("www.test.test", "test_name");
+
+        mockMvc.perform(post("/links")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(asJson(request))
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest())
+            .andExpect(
+                content().string(
+                    not(emptyOrNullString())));
+    }
+
+    @Test
+    void malformedUrl() throws Exception {
+        given(this.createNewLink.create(any(NewLink.class)))
+            .willThrow(new Url.MalformedUrl("www/"));
+
+        final var request = new CreateNewLinkRequest("www/", "test_name");
+
+        mockMvc.perform(post("/links")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(asJson(request))
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isBadRequest())
+            .andExpect(
+                content().string(
+                    not(emptyOrNullString())));
+    }
+
+}

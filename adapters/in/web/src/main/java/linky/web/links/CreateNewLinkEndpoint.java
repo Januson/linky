@@ -27,13 +27,31 @@ class CreateNewLinkEndpoint {
         value = "/links",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> findLinkInfo(@RequestBody CreateNewLinkRequest request) {
-        final var linkName = this.useCase.create(
-            new NewLink(
-                new Name.Unvalidated(request.getName()),
-                new Url.Unvalidated(request.getUrl())));
+    public ResponseEntity<LinkDto> findLinkInfo(@RequestBody CreateNewLinkRequest request) {
+        final var linkName = this.useCase.create(createNewLink(request));
         final var location = URI.create("/links/" + linkName.toString());
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.created(location)
+            .body(new LinkDto(linkName.toString(), request.getUrl()));
+    }
+
+    private NewLink createNewLink(final CreateNewLinkRequest request) {
+        final NewLink newLink;
+        if (request.getName() == null) {
+            newLink = newLinkWithRandomName(request.getUrl());
+        } else {
+            newLink = newLinkWithCustomName(request.getName(), request.getUrl());
+        }
+        return newLink;
+    }
+
+    private NewLink newLinkWithCustomName(final String name, final String url) {
+        return new NewLink(
+            new Name.Unvalidated(name),
+            new Url.Unvalidated(url));
+    }
+
+    private NewLink newLinkWithRandomName(final String url) {
+        return new NewLink(new Url.Unvalidated(url));
     }
 
 }
