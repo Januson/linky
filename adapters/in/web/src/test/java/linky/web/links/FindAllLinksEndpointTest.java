@@ -14,6 +14,7 @@ import java.util.List;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = FindAllLinksEndpoint.class)
@@ -32,6 +33,18 @@ class FindAllLinksEndpointTest {
         mockMvc.perform(get("/links")
             .header("Content-Type", "application/json"))
             .andExpect(status().isOk());
+
+        then(useCase).should().all();
+    }
+
+    @Test
+    void noLinksAvailable() throws Exception {
+        given(useCase.all()).willReturn(List.of());
+
+        mockMvc.perform(get("/links")
+            .header("Content-Type", "application/json"))
+            .andExpect(status().isOk())
+            .andExpect(content().json("[]"));
 
         then(useCase).should().all();
     }
