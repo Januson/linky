@@ -27,7 +27,7 @@ class CreateNewLinkEndpoint {
         value = "/links",
         consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LinkDto> findLinkInfo(@RequestBody CreateNewLinkRequest request) {
+    public ResponseEntity<LinkDto> create(@RequestBody CreateNewLinkRequest request) {
         final var linkName = this.useCase.create(createNewLink(request));
         final var location = URI.create("/links/" + linkName.toString());
         return ResponseEntity.created(location)

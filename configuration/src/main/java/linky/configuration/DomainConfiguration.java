@@ -8,6 +8,9 @@ import linky.links.IsNameUsed;
 import linky.links.LinkVisited;
 import linky.links.Links;
 import linky.links.LinksConfiguration;
+import linky.visits.AddNewVisit;
+import linky.visits.Visits;
+import linky.visits.VisitsConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,11 +18,7 @@ import org.springframework.context.annotation.Configuration;
 public class DomainConfiguration {
 
     private final LinksConfiguration links = new LinksConfiguration();
-
-    @Bean
-    Events<LinkVisited> events() {
-        return new FakeEvents();
-    }
+    private final VisitsConfiguration visits = new VisitsConfiguration();
 
     @Bean
     CreateNewLink createNewLink(final Links links, final IsNameUsed isNameUsed) {
@@ -36,12 +35,9 @@ public class DomainConfiguration {
         return this.links.findAllLinks(links);
     }
 
-    static class FakeEvents implements Events<LinkVisited> {
-
-        @Override
-        public void fire(LinkVisited event) {
-
-        }
+    @Bean
+    AddNewVisit addNewVisit(final Visits visits) {
+        return this.visits.addNewVisit(visits);
     }
 
 }

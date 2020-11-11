@@ -1,10 +1,10 @@
-package linky.configuration;
+package linky.web;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("linky.adapter.web")
+@ComponentScan("linky.web")
 public class WebConfiguration {
 
 }

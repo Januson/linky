@@ -1,10 +1,14 @@
-package linky.configuration;
+package linky.persistence;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @ComponentScan("linky.persistence")
+@EnableJpaRepositories
+@EntityScan
 public class PersistenceConfiguration {
 
 }

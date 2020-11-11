@@ -13,4 +13,5 @@ final class AddNewVisitUseCase implements AddNewVisit {
     public void add(final LinkVisited newVisit) {
         this.visits.add(newVisit);
     }
+
 }
