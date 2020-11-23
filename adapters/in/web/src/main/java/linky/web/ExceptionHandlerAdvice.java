@@ -1,8 +1,9 @@
-package linky.web.links;
+package linky.web;
 
+import linky.links.LinkNotFound;
 import linky.links.Name;
 import linky.links.Url;
-import linky.web.ApiError;
+import linky.web.links.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -47,6 +48,16 @@ public class ExceptionHandlerAdvice {
             .body(
                 new ApiError.Builder(
                     HttpStatus.BAD_REQUEST, e.getMessage()
+                ).build()
+            );
+    }
+
+    @ExceptionHandler(LinkNotFound.class)
+    public ResponseEntity<ApiError> handleLinkNotFound(final LinkNotFound e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(
+                new ApiError.Builder(
+                    HttpStatus.NOT_FOUND, e.getMessage()
                 ).build()
             );
     }

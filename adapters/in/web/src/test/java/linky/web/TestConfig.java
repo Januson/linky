@@ -1,8 +1,9 @@
-package linky.web.links;
+package linky.web;
 
 import linky.links.CreateNewLink;
 import linky.links.FindAllLinks;
 import linky.links.FindLink;
+import linky.visits.FindAllVisits;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -26,5 +27,8 @@ public class TestConfig {
 
     @MockBean
     private CreateNewLink createNewLink;
+
+    @MockBean
+    private FindAllVisits findAllVisits;
 
 } 

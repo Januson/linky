@@ -9,6 +9,10 @@ import linky.links.LinkVisited;
 import linky.links.Links;
 import linky.links.LinksConfiguration;
 import linky.visits.AddNewVisit;
+import linky.visits.EncodePendingVisits;
+import linky.visits.FindAllVisits;
+import linky.visits.GeoEncoder;
+import linky.visits.PendingOrigins;
 import linky.visits.Visits;
 import linky.visits.VisitsConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +40,19 @@ public class DomainConfiguration {
     }
 
     @Bean
-    AddNewVisit addNewVisit(final Visits visits) {
-        return this.visits.addNewVisit(visits);
+    AddNewVisit addNewVisit(final Visits visits, final IsNameUsed isNameUsed) {
+        return this.visits.addNewVisit(visits, isNameUsed);
+    }
+
+    @Bean
+    EncodePendingVisits encodePendingVisits(
+        final PendingOrigins pendingOrigins, final GeoEncoder geoEncoder) {
+        return this.visits.encodePendingVisits(pendingOrigins, geoEncoder);
+    }
+
+    @Bean
+    FindAllVisits findAllVisits(final Visits visits, final IsNameUsed isNameUsed) {
+        return this.visits.findAllVisits(visits, isNameUsed);
     }
 
 }

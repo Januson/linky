@@ -2,9 +2,11 @@ package linky.links;
 
 import linky.links.validation.CompositeValidator;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+@Transactional
 class CreateNewLinkUseCase implements CreateNewLink {
 
     private final Links links;

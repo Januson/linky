@@ -5,7 +5,9 @@ plugins {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":adapters:in:web"))
+    implementation(project(":adapters:in:jobs"))
     implementation(project(":adapters:out:events"))
+    implementation(project(":adapters:out:geo-encoder"))
     implementation(project(":adapters:out:persistence"))
 
     implementation("javax.servlet:javax.servlet-api");

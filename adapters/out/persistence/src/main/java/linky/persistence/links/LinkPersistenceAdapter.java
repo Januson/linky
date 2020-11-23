@@ -40,7 +40,7 @@ class LinkPersistenceAdapter implements Links, IsNameUsed {
     }
 
     @Override
-    public boolean isInUse(final String name) {
-        return this.links.existsByName(name);
+    public boolean isInUse(final Name linkName) {
+        return this.links.existsByName(linkName.toString());
     }
 }

@@ -1,6 +1,7 @@
 package linky.web.links;
 
 import linky.links.FindLink;
+import linky.links.Ip;
 import linky.links.Link;
 import linky.links.Name;
 import linky.links.Url;
@@ -16,7 +17,7 @@ import java.util.Optional;
 import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,7 +34,7 @@ class FindLinkEndpointTest {
     void existingLinkCanBeFound() throws Exception {
         final var expectedLink = "test_name";
         final var expectedLinkName = new Name(expectedLink);
-        given(this.findLink.findBy(expectedLinkName))
+        given(this.findLink.findBy(any(Name.class), any(Ip.class)))
             .willReturn(existingLink(expectedLinkName));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/links/{name}", expectedLinkName)
@@ -48,7 +49,7 @@ class FindLinkEndpointTest {
     @Test
     void linkNotFound() throws Exception {
         final var unknownLinkName = "test_name";
-        given(this.findLink.findBy(any(Name.class)))
+        given(this.findLink.findBy(any(Name.class), any(Ip.class)))
             .willReturn(Optional.empty());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/links/{name}", unknownLinkName)

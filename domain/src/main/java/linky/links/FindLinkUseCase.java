@@ -1,9 +1,12 @@
 package linky.links;
 
 import linky.infrastructure.Events;
+import linky.visits.Origin;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
+@Transactional
 class FindLinkUseCase implements FindLink {
 
     private final Links links;
@@ -15,13 +18,15 @@ class FindLinkUseCase implements FindLink {
     }
 
     @Override
-    public Optional<Link> findBy(final Name linkName) {
+    public Optional<Link> findBy(final Name linkName, Ip origin) {
         final var link = this.links.findBy(linkName);
-        link.ifPresent(l -> fireVisitedEvent(linkName));
+        link.ifPresent(l -> fireVisitedEvent(linkName, origin));
         return link;
     }
 
-    private void fireVisitedEvent(final Name linkName) {
-        this.events.fire(new LinkVisited(new Ip(), linkName));
+    private void fireVisitedEvent(final Name linkName, final Ip origin) {
+        this.events.fire(new LinkVisited(
+            linkName, new Origin.Pending(origin)
+        ));
     }
 }

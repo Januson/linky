@@ -3,6 +3,7 @@ package linky.events;
 import linky.links.Ip;
 import linky.links.LinkVisited;
 import linky.links.Name;
+import linky.visits.Origin;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,9 @@ class LinkVisitedEventTest {
 
     @Test
     void eventReachesTheEndpoint() {
-        this.publisher.fire(new LinkVisited(new Ip(), new Name("test_name")));
+        this.publisher.fire(new LinkVisited(
+            new Name("test_name"), new Origin.Pending(new Ip("8.8.8.8"))
+        ));
 
         await().atMost(1, SECONDS)
             .until(() -> this.visits.lastAdded() != null);

@@ -3,6 +3,7 @@ package linky.persistence.visits;
 import linky.links.Ip;
 import linky.links.LinkVisited;
 import linky.links.Name;
+import linky.visits.Origin;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,8 +26,7 @@ class VisitPersistenceAdapterTest {
         assertThat(this.links.count()).isZero();
 
         LinkVisited visit = new LinkVisited(
-            new Ip(),
-            new Name("stckowfl")
+            new Name("stckowfl"), new Origin.Pending(new Ip("8.8.8.8"))
         );
 
         adapter.add(visit);

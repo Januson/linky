@@ -2,6 +2,7 @@ module linky.persistence {
     requires linky.domain;
     requires java.persistence;
     requires spring.context;
-    requires spring.data.jpa;
     requires spring.boot.autoconfigure;
+    requires spring.data.commons;
+    requires spring.data.jpa;
 }

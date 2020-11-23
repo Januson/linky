@@ -90,7 +90,7 @@ public class Name {
 
         @Override
         public void test(final String text) {
-            if (this.isNameUsed.isInUse(text)) {
+            if (this.isNameUsed.isInUse(new Name(text))) {
                 throw new NameAlreadyInUse(text);
             }
         }

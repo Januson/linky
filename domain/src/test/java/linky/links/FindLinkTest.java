@@ -14,7 +14,7 @@ class FindLinkTest {
         final var useCase = new FindLinkUseCase(links, events);
         final var unknownLinkName = new Name("unknown");
 
-        final var link = useCase.findBy(unknownLinkName);
+        final var link = useCase.findBy(unknownLinkName, new Ip("unknown"));
 
         assertThat(link).isEmpty();
     }
@@ -28,7 +28,7 @@ class FindLinkTest {
         final Events<LinkVisited> events = (event) -> {};
         final var useCase = new FindLinkUseCase(links, events);
 
-        final var link = useCase.findBy(validName);
+        final var link = useCase.findBy(validName, new Ip("unknown"));
 
         assertThat(link)
             .map(Link::name)
@@ -44,7 +44,7 @@ class FindLinkTest {
         final SpyingEvents events = new SpyingEvents();
         final var useCase = new FindLinkUseCase(links, events);
 
-        useCase.findBy(validName);
+        useCase.findBy(validName, new Ip("unknown"));
 
         assertThat(events.lastEvent())
             .isNotNull();

@@ -1,7 +1,12 @@
 package linky.persistence.visits;
 
+import linky.visits.Origin;
+
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,27 +18,39 @@ class VisitEntity {
     @Id
     @GeneratedValue
     private Long id;
-
     @Column
-    private String name;
-
+    private String destination;
     @Column
-    private String url;
+    @Enumerated(EnumType.STRING)
+    private Origin.GeoEncoding state;
+    @Column
+    private String ip;
+    @Column
+    private String country;
 
-    protected VisitEntity() {
+    protected VisitEntity() {}
+
+    VisitEntity(final String destination, final String ip) {
+        this.destination = destination;
+        this.ip = ip;
+        this.state = Origin.GeoEncoding.PENDING;
+        this.country = null;
     }
 
-    VisitEntity(final String name, final String url) {
-        this.name = name;
-        this.url = url;
+    public String getDestination() {
+        return destination;
     }
 
-    String getName() {
-        return this.name;
+    public Origin.GeoEncoding getState() {
+        return state;
     }
 
-    String getUrl() {
-        return this.url;
+    public String getIp() {
+        return ip;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
 }

@@ -50,10 +50,10 @@ class LinkPersistenceAdapterTest {
     @Test
     @Sql("PreexistingLinks.sql")
     void linkNameInUse() {
-        final boolean nameInUse = this.adapter.isInUse("ggl");
+        final boolean nameInUse = this.adapter.isInUse(new Name("ggl"));
         assertThat(nameInUse).isTrue();
 
-        final boolean uniqueName = this.adapter.isInUse("ggl2");
+        final boolean uniqueName = this.adapter.isInUse(new Name("ggl2"));
         assertThat(uniqueName).isFalse();
     }
 

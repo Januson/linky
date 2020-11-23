@@ -1,11 +1,10 @@
 package linky.links;
 
-import linky.infrastructure.Events;
-
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional
 class FindAllLinksUseCase implements FindAllLinks {
 
     private final Links links;
