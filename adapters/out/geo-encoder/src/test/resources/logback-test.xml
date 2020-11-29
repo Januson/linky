@@ -2,4 +2,7 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml" />
     <logger name="org.springframework" level="OFF"/>
+    <!-- WireMock -->
+    <logger name="org.eclipse.jetty" level="OFF"/>
+    <logger name="org.eclipse.jetty.server.handler.ContextHandler" level="OFF"/>
 </configuration>
