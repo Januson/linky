@@ -1,7 +1,5 @@
 package linky.links;
 
-import java.util.Objects;
-
 public class Link {
 
     private final Name name;

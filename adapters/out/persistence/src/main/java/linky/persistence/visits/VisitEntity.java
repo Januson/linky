@@ -3,7 +3,6 @@ package linky.persistence.visits;
 import linky.visits.Origin;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,7 +27,8 @@ class VisitEntity {
     @Column
     private String country;
 
-    protected VisitEntity() {}
+    protected VisitEntity() {
+    }
 
     VisitEntity(final String destination, final String ip) {
         this.destination = destination;

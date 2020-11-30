@@ -1,7 +1,5 @@
 package linky.persistence.visits;
 
-import linky.links.LinkVisited;
-import linky.links.Name;
 import linky.visits.Origin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

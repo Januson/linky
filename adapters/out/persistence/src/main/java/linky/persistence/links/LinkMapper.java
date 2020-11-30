@@ -2,7 +2,6 @@ package linky.persistence.links;
 
 import linky.links.Link;
 import linky.links.Name;
-import linky.links.NewLink;
 import linky.links.Url;
 import org.springframework.stereotype.Component;
 

@@ -14,9 +14,9 @@ public final class ApiError {
     private final LocalDateTime occurredAt;
 
     private ApiError(final HttpStatus status,
-                    final String message,
-                    final LocalDateTime occurredAt,
-                    final List<String> details) {
+                     final String message,
+                     final LocalDateTime occurredAt,
+                     final List<String> details) {
         this.status = status;
         this.message = message;
         this.occurredAt = occurredAt;

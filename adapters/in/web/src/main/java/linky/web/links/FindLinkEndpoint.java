@@ -60,6 +60,7 @@ public class FindLinkEndpoint {
             .map(Optional::get)
             .findFirst()
             .map(this::toIpAddress)
+            // TODO Null Object for unknown ip?
             .orElse(new Ip("unknown"));
     }
 
@@ -73,18 +74,6 @@ public class FindLinkEndpoint {
         }
         return new Ip(byName.getHostAddress());
     }
-
-//            "X-Forwarded-For",
-//                "Proxy-Client-IP",
-//                "WL-Proxy-Client-IP",
-//                "HTTP_X_FORWARDED_FOR",
-//                "HTTP_X_FORWARDED",
-//                "HTTP_X_CLUSTER_CLIENT_IP",
-//                "HTTP_CLIENT_IP",
-//                "HTTP_FORWARDED_FOR",
-//                "HTTP_FORWARDED",
-//                "HTTP_VIA",
-//                "REMOTE_ADDR"
 
     private Stream<Header> ipHeaders() {
         return Stream.of(

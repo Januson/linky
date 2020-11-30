@@ -24,6 +24,13 @@ class LinkPersistenceAdapterTest {
     private LinkRepository links;
 
     @Test
+    void noLinkFound() {
+        final Optional<Link> link = this.adapter.findBy(new Name("ggl"));
+
+        assertThat(link).isEmpty();
+    }
+
+    @Test
     @Sql("PreexistingLinks.sql")
     void findsExistingLink() {
         final Optional<Link> link = this.adapter.findBy(new Name("ggl"));
@@ -49,10 +56,14 @@ class LinkPersistenceAdapterTest {
 
     @Test
     @Sql("PreexistingLinks.sql")
-    void linkNameInUse() {
+    void linkNameIsInUse() {
         final boolean nameInUse = this.adapter.isInUse(new Name("ggl"));
         assertThat(nameInUse).isTrue();
+    }
 
+    @Test
+    @Sql("PreexistingLinks.sql")
+    void linkNameIsNotInUse() {
         final boolean uniqueName = this.adapter.isInUse(new Name("ggl2"));
         assertThat(uniqueName).isFalse();
     }

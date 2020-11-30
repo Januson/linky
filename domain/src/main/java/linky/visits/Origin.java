@@ -10,7 +10,9 @@ public interface Origin {
     }
 
     GeoEncoding geoEncoding();
+
     Ip ip();
+
     Country country();
 
     class Pending implements Origin {

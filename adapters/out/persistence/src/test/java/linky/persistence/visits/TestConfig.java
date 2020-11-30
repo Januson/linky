@@ -7,4 +7,5 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootConfiguration
 @ComponentScan("linky.persistence.visits")
 @EnableAutoConfiguration
-public class TestConfig {}
+public class TestConfig {
+}

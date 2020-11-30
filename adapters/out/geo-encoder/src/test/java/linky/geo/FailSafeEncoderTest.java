@@ -1,15 +1,12 @@
 package linky.geo;
 
 import linky.links.Ip;
-import linky.visits.Country;
 import linky.visits.GeoEncoder;
 import linky.visits.Origin;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -57,6 +54,7 @@ class FailSafeEncoderTest {
 
     static class FailingEncoder implements GeoEncoder {
         private int invocations = 0;
+
         @Override
         public List<Origin.Encoded> encoded(List<Origin.Pending> origins) {
             this.invocations++;

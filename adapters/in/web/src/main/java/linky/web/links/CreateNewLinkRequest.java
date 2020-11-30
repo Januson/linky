@@ -3,8 +3,6 @@ package linky.web.links;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.Optional;
-
 class CreateNewLinkRequest {
 
     private final String url;

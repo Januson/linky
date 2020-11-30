@@ -1,14 +1,9 @@
 package linky.geo;
 
 import linky.links.Ip;
-import linky.visits.Country;
-import linky.visits.GeoEncoder;
 import linky.visits.Origin;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.net.URISyntaxException;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

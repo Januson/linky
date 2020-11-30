@@ -59,6 +59,7 @@ class EncodePendingVisitsTest {
         FakeOrigins() {
             this(Collections.emptyList());
         }
+
         FakeOrigins(List<Origin.Pending> origins) {
             this.origins = origins;
         }

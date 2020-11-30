@@ -22,18 +22,18 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 final class IpApiEncoder implements GeoEncoder {
-private final String host;
+    private final String host;
 
     private static final Logger LOG = LoggerFactory.getLogger(IpApiEncoder.class);
 
     IpApiEncoder() {
         this("http://ip-api.com");
     }
+
     IpApiEncoder(final String host) {
         this.host = host;
     }
@@ -63,7 +63,7 @@ private final String host;
 
     private URI getUri() {
         try {
-            return new URI(this.host+ "/batch?fields=country,query");
+            return new URI(this.host + "/batch?fields=country,query");
         } catch (URISyntaxException e) {
             throw new IllegalStateException();
         }
@@ -119,7 +119,8 @@ private final String host;
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
-            return objectMapper.readValue(ips, new TypeReference<>(){});
+            return objectMapper.readValue(ips, new TypeReference<>() {
+            });
         } catch (IOException e) {
             throw new IllegalArgumentException();
         }
