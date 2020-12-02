@@ -32,7 +32,7 @@ class FailSafeEncoderTest {
         final var backupEncoder = new CountingEncoder();
         final var encoder = new FailSafeEncoder(failingEncoder, backupEncoder);
 
-        final var encodedOrigins = encoder.encoded(origins);
+        encoder.encoded(origins);
 
         assertThat(failingEncoder.invocations()).isEqualTo(3);
         assertThat(backupEncoder.invocations()).isEqualTo(1);
@@ -58,7 +58,7 @@ class FailSafeEncoderTest {
         @Override
         public List<Origin.Encoded> encoded(List<Origin.Pending> origins) {
             this.invocations++;
-            throw new GeoEncodingFailedException();
+            throw new GeoEncodingFailedException("Test failed");
         }
 
         public int invocations() {
@@ -73,7 +73,7 @@ class FailSafeEncoderTest {
             try {
                 TimeUnit.SECONDS.sleep(11);
             } catch (InterruptedException e) {
-                throw new GeoEncodingFailedException();
+                throw new GeoEncodingFailedException("Test failed");
             }
             return List.of();
         }

@@ -6,7 +6,10 @@ import linky.visits.Origin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,15 +22,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class IpApiEncoderTest {
 
-    private static final String BODY = "[{\"country\": \"United States\",\"query\": \"208.80.152.201\"},{\"country\": \"United States\",\"query\": \"8.8.8.8\"},{\"country\": \"Canada\",\"query\": \"24.48.0.1\"}]";
+    private static final Path PATH_TO_BODY = Paths
+        .get("src/test/resources/ip_api_response.json");
     private WireMockServer wireMockServer;
 
     @BeforeEach
-    public void setup() {
+    public void setup() throws IOException {
+        final var body = Files.readAllBytes(PATH_TO_BODY);
         this.wireMockServer = new WireMockServer(options().port(8081));
         this.wireMockServer.stubFor(post(urlEqualTo("/batch?fields=country,query"))
-            .willReturn(aResponse()
-                .withBody(BODY.getBytes(StandardCharsets.UTF_8))));
+            .willReturn(aResponse().withBody(body)));
         this.wireMockServer.start();
     }
 
