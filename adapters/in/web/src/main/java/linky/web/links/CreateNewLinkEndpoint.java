@@ -4,6 +4,7 @@ import linky.links.CreateNewLink;
 import linky.links.Name;
 import linky.links.NewLink;
 import linky.links.Url;
+import linky.web.visits.FindAllVisitsEndpoint;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 
 import static java.util.Objects.requireNonNull;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 class CreateNewLinkEndpoint {
@@ -30,8 +33,21 @@ class CreateNewLinkEndpoint {
     public ResponseEntity<LinkDto> create(@RequestBody CreateNewLinkRequest request) {
         final var linkName = this.useCase.create(createNewLink(request));
         final var location = URI.create("/links/" + linkName.toString());
+        final var newLink = linkResponse(request.getUrl(), linkName.toString());
         return ResponseEntity.created(location)
-            .body(new LinkDto(linkName.toString(), request.getUrl()));
+            .body(newLink);
+    }
+
+    private LinkDto linkResponse(final String url, final String name) {
+        return new LinkDto(name, url)
+            .add(linkTo(
+                methodOn(FindLinkEndpoint.class)
+                    .findByName(null, name)).withSelfRel()
+            ).add(linkTo(
+                methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
+            ).add(linkTo(
+                methodOn(FindAllVisitsEndpoint.class).allOf(name)).withRel("visits")
+            );
     }
 
     private NewLink createNewLink(final CreateNewLinkRequest request) {

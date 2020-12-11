@@ -33,7 +33,7 @@ class CreateNewLinkEndpointTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private CreateNewLink createNewLink;
+    private CreateNewLink useCase;
 
     @BeforeEach
     void setUp() {
@@ -42,7 +42,7 @@ class CreateNewLinkEndpointTest {
     @Test
     void created() throws Exception {
         final var newLinkName = new Name("test_name");
-        given(this.createNewLink.create(any(NewLink.class)))
+        given(this.useCase.create(any(NewLink.class)))
             .willReturn(newLinkName);
 
         final var request = new CreateNewLinkRequest("www.test.test", null);
@@ -57,19 +57,9 @@ class CreateNewLinkEndpointTest {
                     not(emptyOrNullString())));
     }
 
-    public static String asJson(final CreateNewLinkRequest request) {
-        try {
-            return new ObjectMapper()
-                .writerFor(CreateNewLinkRequest.class)
-                .writeValueAsString(request);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Test
     void duplicateName() throws Exception {
-        given(this.createNewLink.create(any(NewLink.class)))
+        given(this.useCase.create(any(NewLink.class)))
             .willThrow(new Name.NameAlreadyInUse("test_name"));
 
         final var request = new CreateNewLinkRequest("www.test.test", "test_name");
@@ -86,7 +76,7 @@ class CreateNewLinkEndpointTest {
 
     @Test
     void abusiveName() throws Exception {
-        given(this.createNewLink.create(any(NewLink.class)))
+        given(this.useCase.create(any(NewLink.class)))
             .willThrow(new Name.NameIsAbusive("test_name"));
 
         final var request = new CreateNewLinkRequest("www.test.test", "test_name");
@@ -103,7 +93,7 @@ class CreateNewLinkEndpointTest {
 
     @Test
     void malformedUrl() throws Exception {
-        given(this.createNewLink.create(any(NewLink.class)))
+        given(this.useCase.create(any(NewLink.class)))
             .willThrow(new Url.MalformedUrl("www/"));
 
         final var request = new CreateNewLinkRequest("www/", "test_name");
@@ -116,6 +106,16 @@ class CreateNewLinkEndpointTest {
             .andExpect(
                 content().string(
                     not(emptyOrNullString())));
+    }
+
+    public static String asJson(final CreateNewLinkRequest request) {
+        try {
+            return new ObjectMapper()
+                .writerFor(CreateNewLinkRequest.class)
+                .writeValueAsString(request);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

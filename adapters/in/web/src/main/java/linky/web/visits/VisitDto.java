@@ -1,11 +1,13 @@
 package linky.web.visits;
 
-class VisitDto {
+import org.springframework.hateoas.RepresentationModel;
+
+class VisitDto extends RepresentationModel<VisitDto> {
     private final String linkName;
     private final String visitedAt;
     private final OriginDto origin;
 
-    VisitDto(String linkName, String visitedAt, OriginDto origin) {
+    VisitDto(final String linkName, final String visitedAt, final OriginDto origin) {
         this.linkName = linkName;
         this.visitedAt = visitedAt;
         this.origin = origin;

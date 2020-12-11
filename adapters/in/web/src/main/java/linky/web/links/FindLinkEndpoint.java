@@ -4,6 +4,7 @@ import linky.links.FindLink;
 import linky.links.Ip;
 import linky.links.Link;
 import linky.links.Name;
+import linky.web.visits.FindAllVisitsEndpoint;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class FindLinkEndpoint {
@@ -35,16 +39,28 @@ public class FindLinkEndpoint {
     ) {
         final var ip = ipAddressOf(request);
         return this.useCase.findBy(new Name(name), ip)
-            .map(this::ok)
+            .map(this::createResponse)
             .orElseThrow(() -> notFound(name));
     }
 
-    private ResponseEntity<LinkDto> ok(final Link link) {
+    private ResponseEntity<LinkDto> createResponse(final Link link) {
         return ResponseEntity.ok(
-            new LinkDto(
+            getLinkDto(
                 link.name().toString(),
                 link.url().toString()
             ));
+    }
+
+    private LinkDto getLinkDto(final String name, final String url) {
+        return new LinkDto(name, url)
+            .add(linkTo(
+                methodOn(FindLinkEndpoint.class)
+                    .findByName(null, name)).withSelfRel()
+            ).add(linkTo(
+                methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
+            ).add(linkTo(
+                methodOn(FindAllVisitsEndpoint.class).allOf(name)).withRel("visits")
+            );
     }
 
     private NotFoundException notFound(final String linkName) {

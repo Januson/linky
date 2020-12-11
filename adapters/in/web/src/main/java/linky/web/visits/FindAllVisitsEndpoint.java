@@ -4,6 +4,7 @@ import linky.links.LinkVisited;
 import linky.links.Name;
 import linky.visits.FindAllVisits;
 import linky.visits.Origin;
+import linky.web.links.FindLinkEndpoint;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 public class FindAllVisitsEndpoint {
 
     private final FindAllVisits useCase;
-    DateTimeFormatter formatter =
+    private final DateTimeFormatter formatter =
         DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT)
             .withLocale(Locale.getDefault())
             .withZone(ZoneId.systemDefault());
@@ -48,10 +52,17 @@ public class FindAllVisitsEndpoint {
     }
 
     private VisitDto toDto(final LinkVisited visit) {
+        final var linkName = visit.destination().toString();
         return new VisitDto(
-            visit.destination().toString(),
+            linkName,
             formatter.format(visit.visitedAt()),
             toDto(visit.origin())
+        ).add(linkTo(
+            methodOn(FindAllVisitsEndpoint.class)
+                .allOf(linkName)).withSelfRel()
+        ).add(linkTo(
+            methodOn(FindLinkEndpoint.class)
+                .findByName(null, linkName)).withRel("link_detail")
         );
     }
 

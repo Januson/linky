@@ -33,12 +33,12 @@ class FindAllVisitsEndpointTest {
     private FindAllVisits useCase;
 
     @Test
-    void existingLinkCanBeFound() throws Exception {
-        final var linkName = new Name("test_name");
+    void visitsOfExistingLinkCanBeFound() throws Exception {
+        final var existingName = "test_name";
         given(this.useCase.allOf(any(Name.class)))
-            .willReturn(existingVisits(linkName));
+            .willReturn(existingVisits(new Name(existingName)));
 
-        mockMvc.perform(get("/visits/{name}", "test_name")
+        mockMvc.perform(get("/visits/{name}", existingName)
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -48,7 +48,7 @@ class FindAllVisitsEndpointTest {
     }
 
     @Test
-    void linkNotFound() throws Exception {
+    void linkMustExistToListItsVisits() throws Exception {
         final var unknownLinkName = "test_name";
         given(this.useCase.allOf(any(Name.class)))
             .willThrow(LinkNotFound.class);
