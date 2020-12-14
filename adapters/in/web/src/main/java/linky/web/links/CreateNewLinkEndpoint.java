@@ -45,8 +45,8 @@ class CreateNewLinkEndpoint {
                     .findByName(null, name)).withSelfRel()
             ).add(linkTo(
                 methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
-            ).add(linkTo(
-                methodOn(FindAllVisitsEndpoint.class).allOf(name)).withRel("visits")
+//            ).add(linkTo(
+//                methodOn(FindAllVisitsEndpoint.class).allOf(name, null)).withRel("visits")
             );
     }
 

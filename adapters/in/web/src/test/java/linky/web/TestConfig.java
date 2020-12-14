@@ -30,4 +30,4 @@ public class TestConfig {
     @MockBean
     private FindAllVisits findAllVisits;
 
-} 
+}
