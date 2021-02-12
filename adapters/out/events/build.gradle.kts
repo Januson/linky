@@ -4,7 +4,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testImplementation("org.awaitility:awaitility:4.0.3")
+    testImplementation("org.awaitility:awaitility")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 

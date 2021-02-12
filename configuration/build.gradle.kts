@@ -1,9 +1,6 @@
-//import org.asciidoctor.gradle.AsciidoctorTask
-
 plugins {
     application
-    id("org.springframework.boot") version "2.3.2.RELEASE"
-//    id("org.asciidoctor.convert") version "1.5.9.2"
+    id("org.springframework.boot") version "2.4.2"
 }
 
 dependencies {
@@ -19,9 +16,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-//    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:{project-version}'
-//    testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc:{project-version}'
-
     runtimeOnly("com.h2database:h2")
 }
 
@@ -30,7 +24,7 @@ val appVersion = project.version.toString()
 val artifactName = "$appName-$appVersion.jar"
 
 application {
-    mainClassName = "linky.configuration.LinkyApplication"
+    mainClass.set("linky.configuration.LinkyApplication")
     applicationName = appName
 }
 
