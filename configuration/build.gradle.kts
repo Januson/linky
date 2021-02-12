@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+
 plugins {
     application
     id("org.springframework.boot") version "2.4.2"
@@ -13,8 +15,9 @@ dependencies {
 
     implementation("javax.servlet:javax.servlet-api");
     implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
     runtimeOnly("com.h2database:h2")
 }
@@ -58,4 +61,8 @@ tasks {
 //        })
 //        outputDir = file("build/docs")
 //    }
+}
+
+tasks.getByName<BootBuildImage>("bootBuildImage") {
+    imageName = "linky.org/$appName"
 }
