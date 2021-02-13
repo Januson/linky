@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: januson
+      changes:
+        - createTable:
+            tableName: link
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: link_pkey
+              - column:
+                  name: shortcut
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: url
+                  type: varchar(2048)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: januson
+      changes:
+        - createTable:
+            tableName: visit
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: visit_pkey
+              - column:
+                  name: destination
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: geo_encoding
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: origin_address
+                  type: varchar(30)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: origin_country
+                  type: varchar(30)
+                  constraints:
+                    nullable: true

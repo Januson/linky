@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/20210213105648-create-db-schema.yaml

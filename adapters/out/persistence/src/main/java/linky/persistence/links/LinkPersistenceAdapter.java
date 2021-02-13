@@ -29,7 +29,7 @@ class LinkPersistenceAdapter implements Links, IsNameUsed {
     @Override
     public Optional<Link> findBy(final Name linkName) {
         return this.links
-            .findByName(linkName.toString())
+            .findByShortcut(linkName.toString())
             .map(this.mapper::toDomainEntity);
     }
 
@@ -41,6 +41,6 @@ class LinkPersistenceAdapter implements Links, IsNameUsed {
 
     @Override
     public boolean isInUse(final Name linkName) {
-        return this.links.existsByName(linkName.toString());
+        return this.links.existsByShortcut(linkName.toString());
     }
 }

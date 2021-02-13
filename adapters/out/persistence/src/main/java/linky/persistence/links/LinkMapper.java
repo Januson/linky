@@ -10,7 +10,7 @@ class LinkMapper {
 
     Link toDomainEntity(final LinkEntity link) {
         return new Link(
-            new Name(link.getName()),
+            new Name(link.getShortcut()),
             new Url(link.getUrl())
         );
     }

@@ -51,7 +51,7 @@ class LinkPersistenceAdapterTest {
         adapter.add(link);
 
         assertThat(this.links.count()).isEqualTo(1);
-        assertThat(this.links.findByName(name.toString())).isPresent();
+        assertThat(this.links.findByShortcut(name.toString())).isPresent();
     }
 
     @Test

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,42 +16,42 @@ import javax.persistence.Table;
 class VisitEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private String destination;
-    @Column
+    @Column(name = "geo_encoding")
     @Enumerated(EnumType.STRING)
-    private Origin.GeoEncoding state;
-    @Column
-    private String ip;
-    @Column
-    private String country;
+    private Origin.GeoEncoding geoEncoding;
+    @Column(name = "origin_address")
+    private String originAddress;
+    @Column(name = "origin_country")
+    private String originCountry;
 
     protected VisitEntity() {
     }
 
     VisitEntity(final String destination, final String ip) {
         this.destination = destination;
-        this.ip = ip;
-        this.state = Origin.GeoEncoding.PENDING;
-        this.country = null;
+        this.originAddress = ip;
+        this.geoEncoding = Origin.GeoEncoding.PENDING;
+        this.originCountry = null;
     }
 
     public String getDestination() {
-        return destination;
+        return this.destination;
     }
 
-    public Origin.GeoEncoding getState() {
-        return state;
+    public Origin.GeoEncoding getGeoEncoding() {
+        return this.geoEncoding;
     }
 
-    public String getIp() {
-        return ip;
+    public String getOriginAddress() {
+        return this.originAddress;
     }
 
-    public String getCountry() {
-        return country;
+    public String getOriginCountry() {
+        return this.originCountry;
     }
 
 }

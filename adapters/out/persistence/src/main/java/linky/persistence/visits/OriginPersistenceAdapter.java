@@ -23,7 +23,7 @@ class OriginPersistenceAdapter implements PendingOrigins {
 
     @Override
     public List<Origin.Pending> all() {
-        return this.visits.findAllByState(Origin.GeoEncoding.PENDING)
+        return this.visits.findAllByGeoEncoding(Origin.GeoEncoding.PENDING)
             .map(this::toOrigin)
             .collect(Collectors.toList());
     }
@@ -41,7 +41,7 @@ class OriginPersistenceAdapter implements PendingOrigins {
     }
 
     private Origin.Pending toOrigin(final OriginView view) {
-        return new Origin.Pending(new Ip(view.getIp()));
+        return new Origin.Pending(new Ip(view.getOriginAddress()));
     }
 
 }

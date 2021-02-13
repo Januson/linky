@@ -24,9 +24,11 @@ class VisitMapper {
     }
 
     private Origin toOrigin(final VisitEntity visit) {
-        return switch (visit.getState()) {
-            case DONE -> new Origin.Encoded(new Ip(visit.getIp()), new Country(visit.getCountry()));
-            case PENDING -> new Origin.Pending(new Ip(visit.getIp()));
+        return switch (visit.getGeoEncoding()) {
+            case DONE -> new Origin.Encoded(
+                new Ip(visit.getOriginAddress()),
+                new Country(visit.getOriginCountry()));
+            case PENDING -> new Origin.Pending(new Ip(visit.getOriginAddress()));
         };
     }
 

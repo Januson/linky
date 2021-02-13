@@ -11,10 +11,10 @@ import java.util.stream.Stream;
 
 interface VisitsRepository extends JpaRepository<VisitEntity, Long> {
 
-    Stream<OriginView> findAllByState(Origin.GeoEncoding state);
+    Stream<OriginView> findAllByGeoEncoding(Origin.GeoEncoding geoEncoding);
 
     @Modifying
-    @Query("update VisitEntity v set v.state = :state, v.country = :country where v.ip = :ip and v.state = 'PENDING'")
+    @Query("update VisitEntity v set v.geoEncoding = :state, v.originCountry = :country where v.originAddress = :ip and v.geoEncoding = 'PENDING'")
     void updateOrigin(
         @Param(value = "state") Origin.GeoEncoding state,
         @Param(value = "country") String country,
