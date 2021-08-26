@@ -26,7 +26,7 @@ allprojects {
     apply(plugin = "jacoco")
 
     jacoco {
-        toolVersion = "0.9.0"
+        toolVersion = "0.8.6"
     }
 
     tasks.jacocoTestReport {
