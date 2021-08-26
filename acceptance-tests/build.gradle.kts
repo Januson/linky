@@ -1,15 +1,15 @@
 plugins {
     jacoco
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.5.21"
 }
 
 repositories {
     mavenCentral()
 }
 
-val spekVersion = "2.0.13"
-val junitVersion = "5.4.2"
-val testContainersVersion = "1.15.1"
+val spekVersion = "2.0.16"
+val junitVersion = "5.7.2"
+val testContainersVersion = "1.16.0"
 
 dependencies {
     implementation(project(":domain"))

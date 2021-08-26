@@ -6,7 +6,7 @@ plugins {
     jacoco
     java
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("org.sonarqube") version "3.1.1"
+    id("org.sonarqube") version "3.3"
 }
 
 sonarqube {
@@ -26,7 +26,7 @@ allprojects {
     apply(plugin = "jacoco")
 
     jacoco {
-        toolVersion = "0.8.6"
+        toolVersion = "0.9.0"
     }
 
     tasks.jacocoTestReport {
@@ -48,17 +48,17 @@ subprojects {
     }
 
     dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:2.4.2"))
+        implementation(platform("org.springframework.boot:spring-boot-dependencies:2.5.4"))
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_15
-        targetCompatibility = JavaVersion.VERSION_15
+        sourceCompatibility = JavaVersion.VERSION_16
+        targetCompatibility = JavaVersion.VERSION_16
         modularity.inferModulePath.set(true)
     }
 
     checkstyle {
-        toolVersion = "8.40"
+        toolVersion = "8.45.1"
     }
 
     tasks.test {

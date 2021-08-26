@@ -1,4 +1,4 @@
-val testcontainersVersion = "1.15.0"
+val testcontainersVersion = "1.16.0"
 
 dependencies {
     implementation(project(":domain"))
