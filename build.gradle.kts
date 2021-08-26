@@ -43,7 +43,6 @@ subprojects {
     apply(plugin = "java-library")
 
     repositories {
-        jcenter()
         mavenCentral()
     }
 

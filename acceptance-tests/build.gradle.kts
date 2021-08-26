@@ -7,7 +7,7 @@ repositories {
     mavenCentral()
 }
 
-val spekVersion = "2.0.16"
+val spekVersion = "2.0.13"
 val junitVersion = "5.7.2"
 val testContainersVersion = "1.16.0"
 
