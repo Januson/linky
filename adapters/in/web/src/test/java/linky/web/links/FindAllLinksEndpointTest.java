@@ -22,7 +22,6 @@ class FindAllLinksEndpointTest {
 
     @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private FindAllLinks useCase;
 

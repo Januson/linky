@@ -35,10 +35,6 @@ class CreateNewLinkEndpointTest {
     @Autowired
     private CreateNewLink useCase;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void created() throws Exception {
         final var newLinkName = new Name("test_name");
