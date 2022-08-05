@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     application
-    id("org.springframework.boot") version "2.5.4"
+    id("org.springframework.boot") version "2.7.2"
 }
 
 dependencies {
