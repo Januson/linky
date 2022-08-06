@@ -1,15 +1,17 @@
 package linky.geo;
 
+import dev.failsafe.CircuitBreakerBuilder;
+import dev.failsafe.RetryPolicyBuilder;
 import linky.visits.GeoEncoder;
 import linky.visits.Origin;
-import net.jodah.failsafe.CircuitBreaker;
-import net.jodah.failsafe.CircuitBreakerOpenException;
-import net.jodah.failsafe.Failsafe;
-import net.jodah.failsafe.FailsafeExecutor;
-import net.jodah.failsafe.Fallback;
-import net.jodah.failsafe.RetryPolicy;
-import net.jodah.failsafe.Timeout;
-import net.jodah.failsafe.TimeoutExceededException;
+import dev.failsafe.CircuitBreaker;
+import dev.failsafe.CircuitBreakerOpenException;
+import dev.failsafe.Failsafe;
+import dev.failsafe.FailsafeExecutor;
+import dev.failsafe.Fallback;
+import dev.failsafe.RetryPolicy;
+import dev.failsafe.Timeout;
+import dev.failsafe.TimeoutExceededException;
 
 import java.net.ConnectException;
 import java.time.Duration;
@@ -45,26 +47,30 @@ public class FailSafeEncoder implements GeoEncoder {
     }
 
     private CircuitBreaker<List<Origin.Encoded>> circuitBreaker() {
-        return new CircuitBreaker<List<Origin.Encoded>>()
+        CircuitBreakerBuilder<List<Origin.Encoded>> builder = CircuitBreaker.builder();
+        return builder
             .withFailureThreshold(3, 10)
             .withSuccessThreshold(5)
-            .withDelay(Duration.ofMinutes(1));
+            .withDelay(Duration.ofMinutes(1))
+            .build();
     }
 
     private RetryPolicy<List<Origin.Encoded>> retry() {
-        return new RetryPolicy<List<Origin.Encoded>>()
-            .handle(
+        RetryPolicyBuilder<List<Origin.Encoded>> builder = RetryPolicy.builder();
+        return builder.handle(
                 ConnectException.class,
                 GeoEncodingFailedException.class,
                 TimeoutExceededException.class
             )
             .withDelay(Duration.ofSeconds(1))
-            .withMaxRetries(3);
+            .withMaxRetries(3)
+            .build();
     }
 
     private Fallback<List<Origin.Encoded>> fallback(final List<Origin.Pending> origins) {
-        return Fallback.of(() -> this.backupEncoder.encoded(origins))
-            .handle(CircuitBreakerOpenException.class);
+        return Fallback.builder(() -> this.backupEncoder.encoded(origins))
+            .handle(CircuitBreakerOpenException.class)
+            .build();
     }
 
 }
