@@ -1,3 +1,7 @@
+plugins {
+    id("com.diffplug.spotless")
+}
+
 dependencies {
 //    implementation("jakarta.transaction:jakarta.transaction-api:2.0.0")
     implementation("javax.transaction:javax.transaction-api:1.3")
@@ -11,3 +15,12 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+spotless {
+    java {
+//        importOrder()
+//        removeUnusedImports()
+//        trimTrailingWhitespace()
+//        endWithNewline()
+        palantirJavaFormat()
+    }
+}

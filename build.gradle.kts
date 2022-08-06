@@ -7,6 +7,11 @@ plugins {
     java
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
     id("org.sonarqube") version "3.3"
+    id("com.diffplug.spotless") version "6.9.0"
+}
+
+repositories {
+    mavenCentral()
 }
 
 sonarqube {
@@ -15,6 +20,16 @@ sonarqube {
         properties["sonar.organization"] = "januson-github"
         properties["sonar.projectKey"] = "linky"
         properties["sonar.login"] = System.getenv("SONAR_TOKEN")
+    }
+}
+
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+        googleJavaFormat()
     }
 }
 
