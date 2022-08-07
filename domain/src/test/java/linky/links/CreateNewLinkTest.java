@@ -1,14 +1,13 @@
 package linky.links;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class CreateNewLinkTest {
 
@@ -21,13 +20,10 @@ class CreateNewLinkTest {
         final var useCase = createUseCase(links);
         final var expectedName = "test-name";
 
-        final var linkName = useCase.create(
-            createNewLink(VALID_URL, expectedName));
+        final var linkName = useCase.create(createNewLink(VALID_URL, expectedName));
 
-        assertThat(linkName)
-            .hasToString(expectedName);
-        assertThat(links.size())
-            .isPositive();
+        assertThat(linkName).hasToString(expectedName);
+        assertThat(links.size()).isPositive();
     }
 
     @Test
@@ -35,15 +31,11 @@ class CreateNewLinkTest {
         final var links = new FakeLinks();
         final var useCase = createUseCase(links);
 
-        final var link = useCase.create(
-            createNewLink(VALID_URL, "test-name"));
+        final var link = useCase.create(createNewLink(VALID_URL, "test-name"));
 
-        assertThat(link)
-            .isNotNull();
-        assertThat(link.toString())
-            .hasSizeGreaterThan(0);
-        assertThat(links.size())
-            .isPositive();
+        assertThat(link).isNotNull();
+        assertThat(link.toString()).hasSizeGreaterThan(0);
+        assertThat(links.size()).isPositive();
     }
 
     @ParameterizedTest
@@ -53,17 +45,12 @@ class CreateNewLinkTest {
         final var useCase = createUseCase(links);
         final var newLink = createNewLink(VALID_URL, name);
 
-        assertThatThrownBy(() -> useCase.create(newLink))
-            .isInstanceOf(Name.NameIsAbusive.class);
-        assertThat(links.size())
-            .isZero();
+        assertThatThrownBy(() -> useCase.create(newLink)).isInstanceOf(Name.NameIsAbusive.class);
+        assertThat(links.size()).isZero();
     }
 
     private static Stream<String> abusiveNames() {
-        return Stream.of(
-            "fucktionallity",
-            "BadassHits"
-        );
+        return Stream.of("fucktionallity", "BadassHits");
     }
 
     @Test
@@ -72,10 +59,8 @@ class CreateNewLinkTest {
         final var useCase = createUseCase(links, name -> true);
         final var newLink = createNewLink(VALID_URL, "name");
 
-        assertThatThrownBy(() -> useCase.create(newLink))
-            .isInstanceOf(Name.NameAlreadyInUse.class);
-        assertThat(links.size())
-            .isZero();
+        assertThatThrownBy(() -> useCase.create(newLink)).isInstanceOf(Name.NameAlreadyInUse.class);
+        assertThat(links.size()).isZero();
     }
 
     @ParameterizedTest
@@ -86,35 +71,24 @@ class CreateNewLinkTest {
 
         final var newLink = createNewLink(url, "test-name");
 
-        assertThatThrownBy(() -> useCase.create(newLink))
-            .isInstanceOf(Url.MalformedUrl.class);
-        assertThat(links.size())
-            .isZero();
+        assertThatThrownBy(() -> useCase.create(newLink)).isInstanceOf(Url.MalformedUrl.class);
+        assertThat(links.size()).isZero();
     }
 
     private static Stream<String> malformedUrls() {
-        return Stream.of(
-            "test-url",
-            "https://",
-            "https",
-            "http//google",
-            "www.google"
-        );
+        return Stream.of("test-url", "https://", "https", "http//google", "www.google");
     }
 
     private CreateNewLinkUseCase createUseCase(final FakeLinks links) {
         return createUseCase(links, IS_NAME_IN_USE);
     }
 
-    private CreateNewLinkUseCase createUseCase(final FakeLinks links,
-                                               final IsNameUsed isNameInUse) {
+    private CreateNewLinkUseCase createUseCase(final FakeLinks links, final IsNameUsed isNameInUse) {
         return new CreateNewLinkUseCase(links, isNameInUse);
     }
 
     private NewLink createNewLink(final String url, final String s) {
-        return new NewLink(
-            new Name.Unvalidated(s),
-            new Url.Unvalidated(url));
+        return new NewLink(new Name.Unvalidated(s), new Url.Unvalidated(url));
     }
 
     private static class FakeLinks implements Links {
@@ -139,7 +113,5 @@ class CreateNewLinkTest {
         public long size() {
             return this.count;
         }
-
     }
-
 }

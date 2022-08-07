@@ -17,5 +17,4 @@ public class Link {
     public Name name() {
         return this.name;
     }
-
 }

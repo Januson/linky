@@ -1,4 +1,4 @@
 module linky.jobs {
-    requires linky.domain;
-    requires spring.context;
+	requires linky.domain;
+	requires spring.context;
 }

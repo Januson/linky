@@ -1,13 +1,12 @@
 package linky.visits;
 
-import linky.links.Ip;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import linky.links.Ip;
+import org.junit.jupiter.api.Test;
 
 class EncodePendingVisitsTest {
     @Test
@@ -46,10 +45,9 @@ class EncodePendingVisitsTest {
 
     private List<Origin.Pending> createPendingOrigins() {
         return List.of(
-            new Origin.Pending(new Ip("8.8.8.8")),
-            new Origin.Pending(new Ip("8.8.8.8")),
-            new Origin.Pending(new Ip("8.8.8.8"))
-        );
+                new Origin.Pending(new Ip("8.8.8.8")),
+                new Origin.Pending(new Ip("8.8.8.8")),
+                new Origin.Pending(new Ip("8.8.8.8")));
     }
 
     static class FakeOrigins implements PendingOrigins {
@@ -96,14 +94,11 @@ class EncodePendingVisitsTest {
     static class FakeEncoder implements GeoEncoder {
         @Override
         public List<Origin.Encoded> encoded(List<Origin.Pending> origins) {
-            return origins.stream()
-                .map(this::toEncoded)
-                .collect(Collectors.toList());
+            return origins.stream().map(this::toEncoded).collect(Collectors.toList());
         }
 
         private Origin.Encoded toEncoded(final Origin origin) {
             return new Origin.Encoded(origin.ip(), new Country("Canada"));
         }
     }
-
 }

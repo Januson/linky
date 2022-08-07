@@ -1,9 +1,8 @@
 package linky.visits;
 
+import java.util.stream.Stream;
 import linky.links.LinkVisited;
 import linky.links.Name;
-
-import java.util.stream.Stream;
 
 class FakeVisits implements Visits {
     private LinkVisited lastVisit;

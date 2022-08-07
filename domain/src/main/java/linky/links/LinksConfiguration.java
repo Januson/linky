@@ -15,5 +15,4 @@ public class LinksConfiguration {
     public FindAllLinks findAllLinks(final Links links) {
         return new FindAllLinksUseCase(links);
     }
-
 }

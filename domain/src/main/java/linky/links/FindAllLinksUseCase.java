@@ -1,8 +1,8 @@
 package linky.links;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 @Transactional
 class FindAllLinksUseCase implements FindAllLinks {
@@ -15,7 +15,6 @@ class FindAllLinksUseCase implements FindAllLinks {
 
     @Override
     public List<Link> all() {
-        return this.links.all()
-            .collect(Collectors.toList());
+        return this.links.all().collect(Collectors.toList());
     }
 }

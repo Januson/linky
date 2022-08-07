@@ -1,9 +1,9 @@
 package linky.links;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import linky.infrastructure.Events;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class FindLinkTest {
 
@@ -30,9 +30,7 @@ class FindLinkTest {
 
         final var link = useCase.findBy(validName, new Ip("unknown"));
 
-        assertThat(link)
-            .map(Link::name)
-            .hasValue(validName);
+        assertThat(link).map(Link::name).hasValue(validName);
     }
 
     @Test
@@ -46,8 +44,7 @@ class FindLinkTest {
 
         useCase.findBy(validName, new Ip("unknown"));
 
-        assertThat(events.lastEvent())
-            .isNotNull();
+        assertThat(events.lastEvent()).isNotNull();
     }
 
     private Link createLink(Name validName) {
@@ -56,12 +53,10 @@ class FindLinkTest {
 
     private static class DummyEvents implements Events<LinkVisited> {
 
-
         @Override
         public void fire(final LinkVisited event) {
             throw new IllegalStateException("Event should not be fired");
         }
-
     }
 
     private static class SpyingEvents implements Events<LinkVisited> {
@@ -77,5 +72,4 @@ class FindLinkTest {
             return lastEvent;
         }
     }
-
 }

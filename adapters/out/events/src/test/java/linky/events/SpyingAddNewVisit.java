@@ -5,15 +5,14 @@ import linky.visits.AddNewVisit;
 
 final class SpyingAddNewVisit implements AddNewVisit {
 
-    private LinkVisited lastAdded;
+	private LinkVisited lastAdded;
 
-    @Override
-    public void add(final LinkVisited newVisit) {
-        this.lastAdded = newVisit;
-    }
+	@Override
+	public void add(final LinkVisited newVisit) {
+		this.lastAdded = newVisit;
+	}
 
-    public LinkVisited lastAdded() {
-        return this.lastAdded;
-    }
-
+	public LinkVisited lastAdded() {
+		return this.lastAdded;
+	}
 }

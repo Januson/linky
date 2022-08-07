@@ -1,9 +1,8 @@
 package linky.visits;
 
+import java.util.List;
 import linky.links.LinkVisited;
 import linky.links.Name;
-
-import java.util.List;
 
 public interface FindAllVisits {
     List<LinkVisited> allOf(Name linkName);

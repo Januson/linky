@@ -12,9 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 public class TestConfig {
 
-    @Bean
-    SpyingAddNewVisit addNewVisit() {
-        return new SpyingAddNewVisit();
-    }
-
+	@Bean
+	SpyingAddNewVisit addNewVisit() {
+		return new SpyingAddNewVisit();
+	}
 }

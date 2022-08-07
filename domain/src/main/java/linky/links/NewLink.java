@@ -23,5 +23,4 @@ public class NewLink {
     public Url.Unvalidated url() {
         return this.url;
     }
-
 }

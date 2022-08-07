@@ -21,38 +21,37 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DomainConfiguration {
 
-    private final LinksConfiguration links = new LinksConfiguration();
-    private final VisitsConfiguration visits = new VisitsConfiguration();
+	private final LinksConfiguration links = new LinksConfiguration();
+	private final VisitsConfiguration visits = new VisitsConfiguration();
 
-    @Bean
-    CreateNewLink createNewLink(final Links links, final IsNameUsed isNameUsed) {
-        return this.links.createNewLink(links, isNameUsed);
-    }
+	@Bean
+	CreateNewLink createNewLink(final Links links, final IsNameUsed isNameUsed) {
+		return this.links.createNewLink(links, isNameUsed);
+	}
 
-    @Bean
-    FindLink findLink(final Links links, final Events<LinkVisited> events) {
-        return this.links.findLink(links, events);
-    }
+	@Bean
+	FindLink findLink(final Links links, final Events<LinkVisited> events) {
+		return this.links.findLink(links, events);
+	}
 
-    @Bean
-    FindAllLinks findAllLinks(final Links links) {
-        return this.links.findAllLinks(links);
-    }
+	@Bean
+	FindAllLinks findAllLinks(final Links links) {
+		return this.links.findAllLinks(links);
+	}
 
-    @Bean
-    AddNewVisit addNewVisit(final Visits visits, final IsNameUsed isNameUsed) {
-        return this.visits.addNewVisit(visits, isNameUsed);
-    }
+	@Bean
+	AddNewVisit addNewVisit(final Visits visits, final IsNameUsed isNameUsed) {
+		return this.visits.addNewVisit(visits, isNameUsed);
+	}
 
-    @Bean
-    EncodePendingVisits encodePendingVisits(
-        final PendingOrigins pendingOrigins, final GeoEncoder geoEncoder) {
-        return this.visits.encodePendingVisits(pendingOrigins, geoEncoder);
-    }
+	@Bean
+	EncodePendingVisits encodePendingVisits(final PendingOrigins pendingOrigins,
+			final GeoEncoder geoEncoder) {
+		return this.visits.encodePendingVisits(pendingOrigins, geoEncoder);
+	}
 
-    @Bean
-    FindAllVisits findAllVisits(final Visits visits, final IsNameUsed isNameUsed) {
-        return this.visits.findAllVisits(visits, isNameUsed);
-    }
-
+	@Bean
+	FindAllVisits findAllVisits(final Visits visits, final IsNameUsed isNameUsed) {
+		return this.visits.findAllVisits(visits, isNameUsed);
+	}
 }

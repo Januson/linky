@@ -9,6 +9,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("linky.persistence")
 @EnableJpaRepositories
 @EntityScan
-public class PersistenceConfiguration {
-
-}
+public class PersistenceConfiguration {}

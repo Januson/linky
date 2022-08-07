@@ -63,7 +63,6 @@ public class Url {
                 return true;
             }
         }
-
     }
 
     public static class MalformedUrl extends RuntimeException {
@@ -71,5 +70,4 @@ public class Url {
             super(String.format("Url is invalid: %s!", url));
         }
     }
-
 }

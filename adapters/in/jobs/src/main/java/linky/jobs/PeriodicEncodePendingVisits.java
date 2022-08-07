@@ -7,15 +7,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class PeriodicEncodePendingVisits {
 
-    private final EncodePendingVisits useCase;
+	private final EncodePendingVisits useCase;
 
-    public PeriodicEncodePendingVisits(final EncodePendingVisits useCase) {
-        this.useCase = useCase;
-    }
+	public PeriodicEncodePendingVisits(final EncodePendingVisits useCase) {
+		this.useCase = useCase;
+	}
 
-    @Scheduled(fixedRate = 300_000)
-    public void encode() {
-        this.useCase.encode();
-    }
-
+	@Scheduled(fixedRate = 300_000)
+	public void encode() {
+		this.useCase.encode();
+	}
 }

@@ -1,10 +1,9 @@
 package linky.links;
 
+import java.util.Optional;
+import javax.transaction.Transactional;
 import linky.infrastructure.Events;
 import linky.visits.Origin;
-
-import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Transactional
 class FindLinkUseCase implements FindLink {
@@ -25,8 +24,6 @@ class FindLinkUseCase implements FindLink {
     }
 
     private void fireVisitedEvent(final Name linkName, final Ip origin) {
-        this.events.fire(new LinkVisited(
-            linkName, new Origin.Pending(origin)
-        ));
+        this.events.fire(new LinkVisited(linkName, new Origin.Pending(origin)));
     }
 }

@@ -8,13 +8,11 @@ public class VisitsConfiguration {
         return new AddNewVisitUseCase(visits, isNameUsed);
     }
 
-    public EncodePendingVisits encodePendingVisits(
-        final PendingOrigins pendingOrigins, final GeoEncoder geoEncoder) {
+    public EncodePendingVisits encodePendingVisits(final PendingOrigins pendingOrigins, final GeoEncoder geoEncoder) {
         return new EncodePendingVisitsUseCase(pendingOrigins, geoEncoder);
     }
 
     public FindAllVisits findAllVisits(final Visits visits, final IsNameUsed isNameUsed) {
         return new FindAllVisitsUseCase(isNameUsed, visits);
     }
-
 }

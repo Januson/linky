@@ -1,5 +1,13 @@
 package linky.web.links;
 
+import static org.hamcrest.Matchers.emptyOrNullString;
+import static org.hamcrest.Matchers.not;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import linky.links.CreateNewLink;
@@ -7,7 +15,6 @@ import linky.links.Name;
 import linky.links.NewLink;
 import linky.links.Url;
 import linky.web.ExceptionHandlerAdvice;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,101 +24,74 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.emptyOrNullString;
-import static org.hamcrest.Matchers.not;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
 @Import({ExceptionHandlerAdvice.class})
 class CreateNewLinkEndpointTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private CreateNewLink useCase;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @Test
-    void created() throws Exception {
-        final var newLinkName = new Name("test_name");
-        given(this.useCase.create(any(NewLink.class)))
-            .willReturn(newLinkName);
+	@Autowired
+	private CreateNewLink useCase;
 
-        final var request = new CreateNewLinkRequest("www.test.test", null);
+	@Test
+	void created() throws Exception {
+		final var newLinkName = new Name("test_name");
+		given(this.useCase.create(any(NewLink.class))).willReturn(newLinkName);
 
-        mockMvc.perform(post("/links")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(asJson(request))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isCreated())
-            .andExpect(
-                content().string(
-                    not(emptyOrNullString())));
-    }
+		final var request = new CreateNewLinkRequest("www.test.test", null);
 
-    @Test
-    void duplicateName() throws Exception {
-        given(this.useCase.create(any(NewLink.class)))
-            .willThrow(new Name.NameAlreadyInUse("test_name"));
+		mockMvc.perform(post("/links").contentType(MediaType.APPLICATION_JSON)
+				.content(asJson(request)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isCreated())
+				.andExpect(content().string(not(emptyOrNullString())));
+	}
 
-        final var request = new CreateNewLinkRequest("www.test.test", "test_name");
+	@Test
+	void duplicateName() throws Exception {
+		given(this.useCase.create(any(NewLink.class)))
+				.willThrow(new Name.NameAlreadyInUse("test_name"));
 
-        mockMvc.perform(post("/links")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(asJson(request))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isConflict())
-            .andExpect(
-                content().string(
-                    not(emptyOrNullString())));
-    }
+		final var request = new CreateNewLinkRequest("www.test.test", "test_name");
 
-    @Test
-    void abusiveName() throws Exception {
-        given(this.useCase.create(any(NewLink.class)))
-            .willThrow(new Name.NameIsAbusive("test_name"));
+		mockMvc.perform(post("/links").contentType(MediaType.APPLICATION_JSON)
+				.content(asJson(request)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isConflict())
+				.andExpect(content().string(not(emptyOrNullString())));
+	}
 
-        final var request = new CreateNewLinkRequest("www.test.test", "test_name");
+	@Test
+	void abusiveName() throws Exception {
+		given(this.useCase.create(any(NewLink.class)))
+				.willThrow(new Name.NameIsAbusive("test_name"));
 
-        mockMvc.perform(post("/links")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(asJson(request))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest())
-            .andExpect(
-                content().string(
-                    not(emptyOrNullString())));
-    }
+		final var request = new CreateNewLinkRequest("www.test.test", "test_name");
 
-    @Test
-    void malformedUrl() throws Exception {
-        given(this.useCase.create(any(NewLink.class)))
-            .willThrow(new Url.MalformedUrl("www/"));
+		mockMvc.perform(post("/links").contentType(MediaType.APPLICATION_JSON)
+				.content(asJson(request)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(not(emptyOrNullString())));
+	}
 
-        final var request = new CreateNewLinkRequest("www/", "test_name");
+	@Test
+	void malformedUrl() throws Exception {
+		given(this.useCase.create(any(NewLink.class))).willThrow(new Url.MalformedUrl("www/"));
 
-        mockMvc.perform(post("/links")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(asJson(request))
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest())
-            .andExpect(
-                content().string(
-                    not(emptyOrNullString())));
-    }
+		final var request = new CreateNewLinkRequest("www/", "test_name");
 
-    public static String asJson(final CreateNewLinkRequest request) {
-        try {
-            return new ObjectMapper()
-                .writerFor(CreateNewLinkRequest.class)
-                .writeValueAsString(request);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
+		mockMvc.perform(post("/links").contentType(MediaType.APPLICATION_JSON)
+				.content(asJson(request)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string(not(emptyOrNullString())));
+	}
 
+	public static String asJson(final CreateNewLinkRequest request) {
+		try {
+			return new ObjectMapper().writerFor(CreateNewLinkRequest.class)
+					.writeValueAsString(request);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

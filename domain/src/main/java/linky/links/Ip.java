@@ -31,5 +31,4 @@ public class Ip {
     public int hashCode() {
         return Objects.hash(address);
     }
-
 }

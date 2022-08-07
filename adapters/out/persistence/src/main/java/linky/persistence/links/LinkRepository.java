@@ -1,11 +1,10 @@
 package linky.persistence.links;
 
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
 interface LinkRepository extends JpaRepository<LinkEntity, Long> {
-    Optional<LinkEntity> findByShortcut(String shortcut);
+	Optional<LinkEntity> findByShortcut(String shortcut);
 
-    boolean existsByShortcut(String shortcut);
+	boolean existsByShortcut(String shortcut);
 }

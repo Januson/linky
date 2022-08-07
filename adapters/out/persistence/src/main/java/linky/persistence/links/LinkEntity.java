@@ -11,30 +11,28 @@ import javax.persistence.Table;
 @Table(name = "link")
 class LinkEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column
-    private String shortcut;
+	@Column
+	private String shortcut;
 
-    @Column
-    private String url;
+	@Column
+	private String url;
 
-    protected LinkEntity() {
-    }
+	protected LinkEntity() {}
 
-    LinkEntity(final String shortcut, final String url) {
-        this.shortcut = shortcut;
-        this.url = url;
-    }
+	LinkEntity(final String shortcut, final String url) {
+		this.shortcut = shortcut;
+		this.url = url;
+	}
 
-    String getShortcut() {
-        return this.shortcut;
-    }
+	String getShortcut() {
+		return this.shortcut;
+	}
 
-    String getUrl() {
-        return this.url;
-    }
-
+	String getUrl() {
+		return this.url;
+	}
 }

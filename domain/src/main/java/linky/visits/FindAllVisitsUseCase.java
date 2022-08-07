@@ -1,14 +1,13 @@
 package linky.visits;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import linky.links.IsNameUsed;
 import linky.links.LinkNotFound;
 import linky.links.LinkVisited;
 import linky.links.Name;
-
-import javax.transaction.Transactional;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional
 class FindAllVisitsUseCase implements FindAllVisits {
@@ -25,9 +24,9 @@ class FindAllVisitsUseCase implements FindAllVisits {
         if (!this.isNameUsed.isInUse(name)) {
             throw new LinkNotFound(name);
         }
-        return this.visits.allOf(name)
-            .sorted(Comparator.comparing(LinkVisited::visitedAt))
-            .collect(Collectors.toList());
+        return this.visits
+                .allOf(name)
+                .sorted(Comparator.comparing(LinkVisited::visitedAt))
+                .collect(Collectors.toList());
     }
-
 }

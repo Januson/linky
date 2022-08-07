@@ -18,16 +18,15 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 public class TestConfig {
 
-    @MockBean
-    private FindAllLinks findAllLinks;
+	@MockBean
+	private FindAllLinks findAllLinks;
 
-    @MockBean
-    private FindLink findLink;
+	@MockBean
+	private FindLink findLink;
 
-    @MockBean
-    private CreateNewLink createNewLink;
+	@MockBean
+	private CreateNewLink createNewLink;
 
-    @MockBean
-    private FindAllVisits findAllVisits;
-
+	@MockBean
+	private FindAllVisits findAllVisits;
 }

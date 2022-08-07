@@ -1,10 +1,9 @@
 package linky.links;
 
-import linky.links.validation.Validatable;
-import linky.links.validation.Validator;
-
 import java.util.Objects;
 import java.util.Set;
+import linky.links.validation.Validatable;
+import linky.links.validation.Validator;
 
 public class Name {
     private final String text;
@@ -54,21 +53,15 @@ public class Name {
             validator.test(this.name);
             return new Name(this.name);
         }
-
     }
 
     static class IsAbusive implements Validator<Name> {
-        private final Set<String> blacklist = Set.of(
-            "fuck",
-            "shit",
-            "cunt"
-        );
+        private final Set<String> blacklist = Set.of("fuck", "shit", "cunt");
 
         @Override
         public void test(final String text) {
             final var loweredText = text.toLowerCase();
-            final var isAbusive = this.blacklist.stream()
-                .anyMatch(loweredText::contains);
+            final var isAbusive = this.blacklist.stream().anyMatch(loweredText::contains);
             if (isAbusive) {
                 throw new NameIsAbusive(text);
             }
@@ -101,5 +94,4 @@ public class Name {
             super(String.format("Link names have to be unique. [%s] is already in use!", name));
         }
     }
-
 }

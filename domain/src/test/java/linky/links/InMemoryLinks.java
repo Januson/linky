@@ -23,5 +23,4 @@ class InMemoryLinks implements Links {
     public Stream<Link> all() {
         return this.links.values().stream();
     }
-
 }

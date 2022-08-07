@@ -11,5 +11,4 @@ public final class NewVisit {
         this.origin = origin;
         this.destination = destination;
     }
-
 }

@@ -1,11 +1,10 @@
 package linky.visits;
 
-import linky.links.LinkVisited;
-import linky.links.Name;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
+import linky.links.LinkVisited;
+import linky.links.Name;
 
 class InMemoryVisits implements Visits {
 

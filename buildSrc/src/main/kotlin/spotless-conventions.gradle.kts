@@ -19,14 +19,14 @@ spotless {
 
     pluginManager.withPlugin("java") {
 
-        val importOrderConfigFile = rootProject.file("src/eclipse/junit-eclipse.importorder")
-        val javaFormatterConfigFile = rootProject.file("src/eclipse/junit-eclipse-formatter-settings.xml")
+//        val importOrderConfigFile = rootProject.file("src/eclipse/junit-eclipse.importorder")
+        val javaFormatterConfigFile = rootProject.file("src/eclipse/linky-formatter-settings.xml")
 
         java {
             palantirJavaFormat()
 //            licenseHeaderFile(license.headerFile, "(package|import|open|module) ")
 //            importOrderFile(importOrderConfigFile)
-//            eclipse().configFile(javaFormatterConfigFile)
+            eclipse().configFile(javaFormatterConfigFile)
             trimTrailingWhitespace()
             endWithNewline()
         }

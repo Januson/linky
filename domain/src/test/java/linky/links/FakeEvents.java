@@ -14,5 +14,4 @@ class FakeEvents implements Events<LinkVisited> {
     public LinkVisited lastEvent() {
         return this.lastEvent;
     }
-
 }

@@ -10,5 +10,4 @@ public interface Links {
     Optional<Link> findBy(Name linkName);
 
     Stream<Link> all();
-
 }

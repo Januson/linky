@@ -1,16 +1,15 @@
 package linky.visits;
 
-import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import javax.transaction.Transactional;
 
 @Transactional
 class EncodePendingVisitsUseCase implements EncodePendingVisits {
     private final PendingOrigins origins;
     private final GeoEncoder encoder;
 
-    EncodePendingVisitsUseCase(final PendingOrigins origins,
-                               final GeoEncoder encoder) {
+    EncodePendingVisitsUseCase(final PendingOrigins origins, final GeoEncoder encoder) {
         this.origins = origins;
         this.encoder = encoder;
     }
@@ -35,5 +34,4 @@ class EncodePendingVisitsUseCase implements EncodePendingVisits {
         }
         this.origins.update(encodedOrigins);
     }
-
 }

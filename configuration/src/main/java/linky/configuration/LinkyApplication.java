@@ -10,18 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import({
-    DomainConfiguration.class,
-    EventsConfiguration.class,
-    GeoEncodingConfiguration.class,
-    JobsConfiguration.class,
-    PersistenceConfiguration.class,
-    WebConfiguration.class
-})
+@Import({DomainConfiguration.class, EventsConfiguration.class, GeoEncodingConfiguration.class,
+		JobsConfiguration.class, PersistenceConfiguration.class, WebConfiguration.class})
 public class LinkyApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(LinkyApplication.class, args);
-    }
-
+	public static void main(String[] args) {
+		SpringApplication.run(LinkyApplication.class, args);
+	}
 }

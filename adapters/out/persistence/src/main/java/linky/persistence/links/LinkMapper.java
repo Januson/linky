@@ -8,18 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 class LinkMapper {
 
-    Link toDomainEntity(final LinkEntity link) {
-        return new Link(
-            new Name(link.getShortcut()),
-            new Url(link.getUrl())
-        );
-    }
+	Link toDomainEntity(final LinkEntity link) {
+		return new Link(new Name(link.getShortcut()), new Url(link.getUrl()));
+	}
 
-    LinkEntity toJpaEntity(final Link link) {
-        return new LinkEntity(
-            link.name().toString(),
-            link.url().toString()
-        );
-    }
-
+	LinkEntity toJpaEntity(final Link link) {
+		return new LinkEntity(link.name().toString(), link.url().toString());
+	}
 }

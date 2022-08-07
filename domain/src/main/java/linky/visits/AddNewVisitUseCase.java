@@ -1,10 +1,9 @@
 package linky.visits;
 
+import javax.transaction.Transactional;
 import linky.links.IsNameUsed;
 import linky.links.LinkNotFound;
 import linky.links.LinkVisited;
-
-import javax.transaction.Transactional;
 
 @Transactional
 class AddNewVisitUseCase implements AddNewVisit {
@@ -23,5 +22,4 @@ class AddNewVisitUseCase implements AddNewVisit {
         }
         this.visits.add(newVisit);
     }
-
 }

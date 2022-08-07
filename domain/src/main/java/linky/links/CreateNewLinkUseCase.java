@@ -1,10 +1,9 @@
 package linky.links;
 
-import linky.links.validation.CompositeValidator;
-
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
+import javax.transaction.Transactional;
+import linky.links.validation.CompositeValidator;
 
 @Transactional
 class CreateNewLinkUseCase implements CreateNewLink {
@@ -19,18 +18,13 @@ class CreateNewLinkUseCase implements CreateNewLink {
 
     @Override
     public Name create(final NewLink newLink) {
-        final var link = new Link(
-            validName(newLink),
-            validUrl(newLink)
-        );
+        final var link = new Link(validName(newLink), validUrl(newLink));
         this.links.add(link);
         return link.name();
     }
 
     private Name validName(final NewLink linkName) {
-        return linkName.name()
-            .map(name -> name.valid(nameValidator()))
-            .orElseGet(this::randomName);
+        return linkName.name().map(name -> name.valid(nameValidator())).orElseGet(this::randomName);
     }
 
     private Url validUrl(NewLink newLink) {
@@ -42,10 +36,6 @@ class CreateNewLinkUseCase implements CreateNewLink {
     }
 
     private CompositeValidator<Name> nameValidator() {
-        return new CompositeValidator<>(List.of(
-            new Name.IsAbusive(),
-            new Name.IsUnique(this.isNameUsed)
-        ));
+        return new CompositeValidator<>(List.of(new Name.IsAbusive(), new Name.IsUnique(this.isNameUsed)));
     }
-
 }

@@ -1,5 +1,14 @@
 package linky.web.visits;
 
+import static org.hamcrest.Matchers.emptyOrNullString;
+import static org.hamcrest.Matchers.not;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 import linky.links.Ip;
 import linky.links.LinkNotFound;
 import linky.links.LinkVisited;
@@ -15,75 +24,53 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-
-import static org.hamcrest.Matchers.emptyOrNullString;
-import static org.hamcrest.Matchers.not;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @WebMvcTest(FindAllVisitsEndpoint.class)
 @ExtendWith(SpringExtension.class)
 class FindAllVisitsEndpointTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private FindAllVisits useCase;
+	@Autowired
+	private MockMvc mockMvc;
 
-    @Test
-    void visitsOfExistingLinkCanBeFoun2d() throws Exception {
-        final var existingName = "test_name";
-        given(this.useCase.allOf(any(Name.class)))
-            .willReturn(existingVisits(new Name(existingName)));
+	@Autowired
+	private FindAllVisits useCase;
 
-        this.mockMvc.perform(get("/visits/" + existingName)
-                .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
-    }
+	@Test
+	void visitsOfExistingLinkCanBeFoun2d() throws Exception {
+		final var existingName = "test_name";
+		given(this.useCase.allOf(any(Name.class)))
+				.willReturn(existingVisits(new Name(existingName)));
 
-    @Test
-    void visitsOfExistingLinkCanBeFound() throws Exception {
-        final var existingName = "test_name";
-        given(this.useCase.allOf(any(Name.class)))
-            .willReturn(existingVisits(new Name(existingName)));
+		this.mockMvc.perform(get("/visits/" + existingName).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
 
-        mockMvc.perform(get("/visits/{name}", existingName)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(
-                content().string(
-                    not(emptyOrNullString())));
-    }
+	@Test
+	void visitsOfExistingLinkCanBeFound() throws Exception {
+		final var existingName = "test_name";
+		given(this.useCase.allOf(any(Name.class)))
+				.willReturn(existingVisits(new Name(existingName)));
 
-    @Test
-    void linkMustExistToListItsVisits() throws Exception {
-        final var unknownLinkName = "test_name";
-        given(this.useCase.allOf(any(Name.class)))
-            .willThrow(LinkNotFound.class);
+		mockMvc.perform(get("/visits/{name}", existingName).contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().string(not(emptyOrNullString())));
+	}
 
-        mockMvc.perform(get("/visits/{name}", unknownLinkName)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isNotFound())
-            .andExpect(
-                content().string(
-                    not(emptyOrNullString())));
-    }
+	@Test
+	void linkMustExistToListItsVisits() throws Exception {
+		final var unknownLinkName = "test_name";
+		given(this.useCase.allOf(any(Name.class))).willThrow(LinkNotFound.class);
 
-    private List<LinkVisited> existingVisits(final Name name) {
-        return List.of(
-            new LinkVisited(name,
-                new Origin.Encoded(new Ip("unknown"), new Country("unknown"))),
-            new LinkVisited(name,
-                new Origin.Encoded(new Ip("8.8.8.8"), new Country("Canada"))),
-            new LinkVisited(name,
-                new Origin.Pending(new Ip("192.168.122.155")))
-        );
-    }
+		mockMvc.perform(get("/visits/{name}", unknownLinkName)
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isNotFound())
+				.andExpect(content().string(not(emptyOrNullString())));
+	}
 
+	private List<LinkVisited> existingVisits(final Name name) {
+		return List.of(
+				new LinkVisited(name,
+						new Origin.Encoded(new Ip("unknown"), new Country("unknown"))),
+				new LinkVisited(name, new Origin.Encoded(new Ip("8.8.8.8"), new Country("Canada"))),
+				new LinkVisited(name, new Origin.Pending(new Ip("192.168.122.155"))));
+	}
 }

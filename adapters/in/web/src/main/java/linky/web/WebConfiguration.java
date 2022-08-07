@@ -5,6 +5,4 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("linky.web")
-public class WebConfiguration {
-
-}
+public class WebConfiguration {}

@@ -12,9 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableAutoConfiguration
 public class TestConfig {
 
-    @Bean
-    SpyingEncodePendingVisits encodePendingVisits() {
-        return new SpyingEncodePendingVisits();
-    }
-
+	@Bean
+	SpyingEncodePendingVisits encodePendingVisits() {
+		return new SpyingEncodePendingVisits();
+	}
 }

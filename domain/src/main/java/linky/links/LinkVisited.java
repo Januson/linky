@@ -1,9 +1,8 @@
 package linky.links;
 
-import linky.visits.Origin;
-
 import java.time.Instant;
 import java.util.Objects;
+import linky.visits.Origin;
 
 public class LinkVisited {
 
@@ -42,9 +41,9 @@ public class LinkVisited {
             return false;
         }
         LinkVisited that = (LinkVisited) o;
-        return Objects.equals(at, that.at) &&
-            Objects.equals(origin, that.origin) &&
-            Objects.equals(destination, that.destination);
+        return Objects.equals(at, that.at)
+                && Objects.equals(origin, that.origin)
+                && Objects.equals(destination, that.destination);
     }
 
     @Override
@@ -54,10 +53,6 @@ public class LinkVisited {
 
     @Override
     public String toString() {
-        return "LinkVisited{" +
-            "at=" + at +
-            ", origin=" + origin +
-            ", destination=" + destination +
-            '}';
+        return "LinkVisited{" + "at=" + at + ", origin=" + origin + ", destination=" + destination + '}';
     }
 }

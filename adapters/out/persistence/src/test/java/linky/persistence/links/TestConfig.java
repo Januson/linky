@@ -7,5 +7,4 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootConfiguration
 @ComponentScan("linky.persistence.links")
 @EnableAutoConfiguration
-public class TestConfig {
-}
+public class TestConfig {}

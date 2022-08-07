@@ -1,10 +1,9 @@
 package linky.links;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.IntStream;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 class FindAllLinksTest {
 
@@ -27,20 +26,14 @@ class FindAllLinksTest {
 
         final var link = useCase.all();
 
-        assertThat(link)
-            .hasSize(expectedNumberOfLinks);
+        assertThat(link).hasSize(expectedNumberOfLinks);
     }
 
     private void createLinks(final Links links, final int n) {
-        IntStream.range(0, n)
-            .mapToObj(this::createLink)
-            .forEach(links::add);
+        IntStream.range(0, n).mapToObj(this::createLink).forEach(links::add);
     }
 
     private Link createLink(final int n) {
-        return new Link(
-            new Name("link_" + n),
-            new Url("test_url"));
+        return new Link(new Name("link_" + n), new Url("test_url"));
     }
-
 }

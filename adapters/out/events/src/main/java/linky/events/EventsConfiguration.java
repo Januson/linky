@@ -11,13 +11,11 @@ import org.springframework.core.task.SimpleAsyncTaskExecutor;
 @ComponentScan("linky.events")
 public class EventsConfiguration {
 
-    @Bean(name = "applicationEventMulticaster")
-    public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
-        SimpleApplicationEventMulticaster eventMulticaster =
-            new SimpleApplicationEventMulticaster();
+	@Bean(name = "applicationEventMulticaster")
+	public ApplicationEventMulticaster simpleApplicationEventMulticaster() {
+		SimpleApplicationEventMulticaster eventMulticaster = new SimpleApplicationEventMulticaster();
 
-        eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
-        return eventMulticaster;
-    }
-
+		eventMulticaster.setTaskExecutor(new SimpleAsyncTaskExecutor());
+		return eventMulticaster;
+	}
 }

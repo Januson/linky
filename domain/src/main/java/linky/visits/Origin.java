@@ -63,5 +63,4 @@ public interface Origin {
             return this.country;
         }
     }
-
 }
