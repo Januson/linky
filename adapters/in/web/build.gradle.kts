@@ -1,3 +1,7 @@
+plugins {
+    id("base-conventions")
+}
+
 dependencies {
     implementation(project(":domain"));
     implementation("javax.servlet:javax.servlet-api");

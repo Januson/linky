@@ -1,3 +1,7 @@
+plugins {
+    id("base-conventions")
+}
+
 val testcontainersVersion = "1.16.0"
 
 dependencies {
