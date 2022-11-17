@@ -3,8 +3,8 @@
 plugins {
     application
 //    id("org.springframework.boot") version "2.7.2"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-    id("io.micronaut.application") version "3.6.3"
+//    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application")
     id("base-conventions")
 }
 

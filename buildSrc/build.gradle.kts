@@ -9,4 +9,6 @@ repositories {
 
 dependencies {
     implementation("com.diffplug.spotless:spotless-plugin-gradle:6.9.0")
+//    implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.1.2")
+    implementation("io.micronaut.gradle:micronaut-gradle-plugin:3.6.3")
 }
