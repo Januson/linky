@@ -7,6 +7,7 @@ val micronautVersion by extra("3.7.4")
 
 dependencies {
     implementation(project(":domain"));
+
     implementation("javax.servlet:javax.servlet-api");
     implementation("org.springframework.boot:spring-boot-starter-hateoas")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -21,6 +22,9 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testImplementation("io.micronaut.test:micronaut-test-rest-assured")
 }
 
 tasks.withType<Test> {

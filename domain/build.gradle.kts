@@ -1,6 +1,8 @@
 plugins {
-    id("com.diffplug.spotless")
+    id("io.micronaut.library")
 }
+
+val micronautVersion by extra("3.7.4")
 
 dependencies {
 //    implementation("jakarta.transaction:jakarta.transaction-api:2.0.0")
@@ -13,14 +15,4 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-}
-
-spotless {
-    java {
-//        importOrder()
-//        removeUnusedImports()
-//        trimTrailingWhitespace()
-//        endWithNewline()
-        palantirJavaFormat()
-    }
 }
