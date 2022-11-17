@@ -14,7 +14,7 @@ import linky.links.CreateNewLink;
 import linky.links.Name;
 import linky.links.NewLink;
 import linky.links.Url;
-import linky.web.ExceptionHandlerAdvice;
+//import linky.web.ExceptionHandlerAdvice;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
-@Import({ExceptionHandlerAdvice.class})
+//@Import({ExceptionHandlerAdvice.class})
 class CreateNewLinkEndpointTest {
 
 	@Autowired
