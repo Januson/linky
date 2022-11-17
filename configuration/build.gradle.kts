@@ -1,8 +1,10 @@
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+//import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     application
-    id("org.springframework.boot") version "2.7.2"
+//    id("org.springframework.boot") version "2.7.2"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.6.3"
     id("base-conventions")
 }
 
@@ -20,6 +22,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation("io.micronaut:micronaut-validation")
+
     runtimeOnly("com.h2database:h2")
 }
 
@@ -32,26 +41,26 @@ application {
     applicationName = appName
 }
 
-springBoot {
-    buildInfo {
-        properties {
-            artifact = artifactName
-            version = appName
-            name = rootProject.name
-        }
-    }
-}
+//springBoot {
+//    buildInfo {
+//        properties {
+//            artifact = artifactName
+//            version = appName
+//            name = rootProject.name
+//        }
+//    }
+//}
 
 tasks {
 
-    bootJar {
-        archiveBaseName.set(appName)
-        archiveVersion.set(appVersion)
-
-        if (project.hasProperty("archiveName")) {
-            archiveFileName.set(project.properties["archiveName"] as String)
-        }
-    }
+//    bootJar {
+//        archiveBaseName.set(appName)
+//        archiveVersion.set(appVersion)
+//
+//        if (project.hasProperty("archiveName")) {
+//            archiveFileName.set(project.properties["archiveName"] as String)
+//        }
+//    }
 
 //    "asciidoctor"(AsciidoctorTask::class) {
 //        dependsOn(":test")
@@ -64,6 +73,18 @@ tasks {
 //    }
 }
 
-tasks.getByName<BootBuildImage>("bootBuildImage") {
-    imageName = "linky.org/$appName"
+//tasks.getByName<BootBuildImage>("bootBuildImage") {
+//    imageName = "linky.org/$appName"
+//}
+
+graalvmNative.toolchainDetection.set(false)
+
+micronaut {
+    version("3.7.4")
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("linky.*")
+    }
 }
