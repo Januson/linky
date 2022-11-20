@@ -8,7 +8,6 @@ import io.micronaut.http.server.exceptions.ExceptionHandler;
 
 import jakarta.inject.Singleton;
 import linky.links.LinkNotFound;
-import linky.links.Url;
 
 @Produces
 @Singleton
@@ -16,8 +15,8 @@ public class LinkNotFoundExceptionHandler implements ExceptionHandler<LinkNotFou
 
     @Override
     public HttpResponse<ApiError> handle(HttpRequest request, LinkNotFound exception) {
-        return HttpResponse.status(HttpStatus.CONFLICT).body(
-            new ApiError.Builder(HttpStatus.CONFLICT, exception.getMessage()).build()
+        return HttpResponse.notFound(
+            new ApiError.Builder(HttpStatus.NOT_FOUND, exception.getMessage()).build()
         );
     }
 }

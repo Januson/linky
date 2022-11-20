@@ -9,6 +9,9 @@ public class Name {
     private final String text;
 
     public Name(final String text) {
+        if (text.isBlank()) {
+            throw new IllegalArgumentException("Name is required!");
+        }
         this.text = text;
     }
 
