@@ -2,10 +2,9 @@ package linky.web;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.server.exceptions.ExceptionHandler;
-
-import org.springframework.http.HttpStatus;
 
 import jakarta.inject.Singleton;
 import linky.links.Name;
@@ -17,8 +16,7 @@ public class AlreadyInUseExceptionHandler implements ExceptionHandler<Name.NameA
 
     @Override
     public HttpResponse<ApiError> handle(HttpRequest request, Name.NameAlreadyInUse exception) {
-        return HttpResponse.notFound(
-            new ApiError.Builder(HttpStatus.CONFLICT, exception.getMessage()).build()
-        );
+        return HttpResponse.status(HttpStatus.CONFLICT)
+            .body(new ApiError.Builder(HttpStatus.CONFLICT, exception.getMessage()).build());
     }
 }

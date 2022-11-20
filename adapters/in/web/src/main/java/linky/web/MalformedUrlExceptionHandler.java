@@ -2,10 +2,10 @@ package linky.web;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.server.exceptions.ExceptionHandler;
 
-import org.springframework.http.HttpStatus;
 
 import jakarta.inject.Singleton;
 import linky.links.Name;
@@ -17,8 +17,8 @@ public class MalformedUrlExceptionHandler implements ExceptionHandler<Url.Malfor
 
     @Override
     public HttpResponse<ApiError> handle(HttpRequest request, Url.MalformedUrl exception) {
-        return HttpResponse.notFound(
-            new ApiError.Builder(HttpStatus.CONFLICT, exception.getMessage()).build()
+        return HttpResponse.badRequest(
+            new ApiError.Builder(HttpStatus.BAD_REQUEST, exception.getMessage()).build()
         );
     }
 }

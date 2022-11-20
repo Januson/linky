@@ -1,9 +1,10 @@
 package linky.web;
 
+import io.micronaut.http.HttpStatus;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.http.HttpStatus;
 
 public final class ApiError {
 
