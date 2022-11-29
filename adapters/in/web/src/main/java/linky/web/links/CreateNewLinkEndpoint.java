@@ -35,13 +35,13 @@ class CreateNewLinkEndpoint {
     }
 
     private LinkDto linkResponse(final String url, final String name) {
-        return new LinkDto(name, url)
-            .add(linkTo(methodOn(FindLinkEndpoint.class).findByName(null, name)).withSelfRel())
-            .add(linkTo(methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
+        return new LinkDto(name, url);
+//            .add(linkTo(methodOn(FindLinkEndpoint.class).findByName(null, name)).withSelfRel())
+//            .add(linkTo(methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
                 // ).add(linkTo(
                 // methodOn(FindAllVisitsEndpoint.class).allOf(name,
                 // null)).withRel("visits")
-            );
+//            );
     }
 
     private NewLink createNewLink(final CreateNewLinkRequest request) {

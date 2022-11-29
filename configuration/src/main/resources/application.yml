@@ -1,0 +1,4 @@
+micronaut:
+  server:
+    netty:
+      log-level: TRACE

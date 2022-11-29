@@ -37,7 +37,7 @@ public class FindAllVisitsEndpoint {
         this.useCase = useCase;
     }
 
-    @Get(value = "/visits/{linkName}", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @Get(value = "/visits/{linkName}", produces = MediaType.APPLICATION_JSON)
     public HttpResponse<List<VisitDto>> allOf(@PathVariable final String linkName,
         @QueryValue(value = "page", defaultValue = "0") int page,
         @QueryValue(value = "size", defaultValue = "10") int size) {

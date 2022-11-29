@@ -3,7 +3,6 @@ package linky.web.links;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,8 +12,10 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import linky.links.CreateNewLink;
 import linky.links.Name;
@@ -23,19 +24,12 @@ import linky.links.Url;
 import linky.web.ApiError;
 
 @MicronautTest
+@ExtendWith(MockitoExtension.class)
 class CreateNewLinkEndpointTest {
 
-    private CreateNewLink useCase;
-
-    @BeforeEach
-    void setUp() {
-        this.useCase = mock(CreateNewLink.class);
-    }
-
-    @MockBean(CreateNewLink.class)
-    CreateNewLink createNewLink() {
-        return this.useCase;
-    }
+    @Mock
+    @MockBean
+    public CreateNewLink useCase;
 
     @Test
     void created(RequestSpecification spec) {

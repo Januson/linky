@@ -30,11 +30,12 @@ public class FindLinkEndpoint {
         this.useCase = useCase;
     }
 
-    @Get(value = "/links/{name}", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @Get(value = "/links/{name}", produces = MediaType.APPLICATION_JSON)
     public HttpResponse<LinkDto> findByName(final HttpServletRequest request,
         final @PathVariable String name) {
         final var ip = ipAddressOf(request);
-        return this.useCase.findBy(new Name(name), ip).map(this::createResponse)
+        return this.useCase.findBy(new Name(name), ip)
+            .map(this::createResponse)
             .orElseThrow(() -> notFound(name));
     }
 
@@ -43,13 +44,13 @@ public class FindLinkEndpoint {
     }
 
     private LinkDto getLinkDto(final String name, final String url) {
-        return new LinkDto(name, url)
-            .add(linkTo(methodOn(FindLinkEndpoint.class).findByName(null, name)).withSelfRel())
-            .add(linkTo(methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
+        return new LinkDto(name, url);
+//            .add(linkTo(methodOn(FindLinkEndpoint.class).findByName(null, name)).withSelfRel())
+//            .add(linkTo(methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
                 // ).add(linkTo(
                 // methodOn(FindAllVisitsEndpoint.class).allOf(name,
                 // null)).withRel("visits")
-            );
+//            );
     }
 
     private NotFoundException notFound(final String linkName) {

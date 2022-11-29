@@ -9,7 +9,6 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import linky.links.FindAllLinks;
 import linky.links.Link;
@@ -23,13 +22,15 @@ public class FindAllLinksEndpoint {
         this.useCase = useCase;
     }
 
-    @Get(value = "/links", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    @Get(value = "/links", produces = MediaType.APPLICATION_JSON)
     public HttpResponse<List<LinkDto>> all() {
         return HttpResponse.ok(createResponse(this.useCase.all()));
     }
 
     private List<LinkDto> createResponse(final List<Link> links) {
-        return links.stream().map(this::toDto).collect(Collectors.toList());
+        return links.stream()
+            .map(this::toDto)
+            .toList();
     }
 
     private LinkDto toDto(final Link link) {
@@ -37,12 +38,12 @@ public class FindAllLinksEndpoint {
     }
 
     private LinkDto toDto(final String name, final String url) {
-        return new LinkDto(name, url)
-            .add(linkTo(methodOn(FindLinkEndpoint.class).findByName(null, name)).withSelfRel())
-            .add(linkTo(methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
+        return new LinkDto(name, url);
+//            .add(linkTo(methodOn(FindLinkEndpoint.class).findByName(null, name)).withSelfRel())
+//            .add(linkTo(methodOn(FindAllLinksEndpoint.class).all()).withRel("all_links")
                 // ).add(linkTo(
                 // methodOn(FindAllVisitsEndpoint.class).allOf(name,
                 // null)).withRel("visits")
-            );
+//            );
     }
 }

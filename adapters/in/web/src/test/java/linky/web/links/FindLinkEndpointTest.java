@@ -1,58 +1,66 @@
 package linky.web.links;
 
-import static org.hamcrest.Matchers.emptyOrNullString;
-import static org.hamcrest.Matchers.not;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import io.micronaut.test.annotation.MockBean;
+import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+
 import linky.links.FindLink;
 import linky.links.Ip;
 import linky.links.Link;
 import linky.links.Name;
 import linky.links.Url;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-@WebMvcTest(controllers = FindLinkEndpoint.class)
+@MicronautTest
+@ExtendWith(MockitoExtension.class)
 class FindLinkEndpointTest {
 
-	@Autowired
-	private MockMvc mockMvc;
+    @Mock
+    @MockBean
+    public FindLink useCase;
 
-	@Autowired
-	private FindLink findLink;
+    @Test
+    void existingLinkCanBeFound(RequestSpecification spec) {
+        final var expectedName = "test_name";
+        given(this.useCase.findBy(any(Name.class), any(Ip.class)))
+            .willReturn(existingLink(new Name(expectedName)));
 
-	@Test
-	void existingLinkCanBeFound() throws Exception {
-		final var expectedLink = "test_name";
-		final var expectedLinkName = new Name(expectedLink);
-		given(this.findLink.findBy(any(Name.class), any(Ip.class)))
-				.willReturn(existingLink(expectedLinkName));
+        final var foundLink = spec
+            .when().get("/links/{name}", expectedName)
+            .then().statusCode(200)
+            .extract()
+            .body().as(LinkDto.class);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/links/{name}", expectedLinkName)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(content().string(not(emptyOrNullString())));
-	}
+        assertThat(foundLink)
+            .returns(expectedName, LinkDto::getName);
+    }
 
-	@Test
-	void linkNotFound() throws Exception {
-		final var unknownLinkName = "test_name";
-		given(this.findLink.findBy(any(Name.class), any(Ip.class))).willReturn(Optional.empty());
+    @Test
+    void linkNotFound(RequestSpecification spec) {
+        final var unknownLinkName = "test_name";
+        given(this.useCase.findBy(any(Name.class), any(Ip.class)))
+            .willReturn(Optional.empty());
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/links/{name}", unknownLinkName)
-				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNotFound())
-				.andExpect(content().string(not(emptyOrNullString())));
-	}
+        spec
+            .given().contentType(ContentType.JSON)
+            .when().get("/links/{name}", unknownLinkName)
+            .then().statusCode(404);
+    }
 
-	private Optional<Link> existingLink(final Name name) {
-		return Optional.of(new Link(name, new Url("test_url")));
-	}
+    private Optional<Link> existingLink(final Name name) {
+        return Optional.of(new Link(name, new Url("test_url")));
+    }
 }

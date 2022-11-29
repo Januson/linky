@@ -3,15 +3,16 @@ package linky.web.visits;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 import io.micronaut.test.annotation.MockBean;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.specification.RequestSpecification;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
@@ -25,19 +26,12 @@ import linky.visits.Origin;
 import linky.web.ApiError;
 
 @MicronautTest
+@ExtendWith(MockitoExtension.class)
 class FindAllVisitsEndpointTest {
 
-    private FindAllVisits useCase;
-
-    @BeforeEach
-    void setUp() {
-        this.useCase = mock(FindAllVisits.class);
-    }
-
-    @MockBean(FindAllVisits.class)
-    FindAllVisits findAllVisits() {
-        return this.useCase;
-    }
+    @Mock
+    @MockBean
+    public FindAllVisits useCase;
 
     @Test
     void visitsOfExistingLinkCanBeFound(RequestSpecification spec) {
@@ -71,18 +65,21 @@ class FindAllVisitsEndpointTest {
             .isNotBlank();
     }
 
-	@Test
-	void visitsOfExistingLinkCanBeFounad(RequestSpecification spec) {
-		ApiError error = spec
-			.when().post("/visits")
-			.then().statusCode(400)
-			.extract()
-			.body().as(new TypeRef<>() {});
+    @Test
+    void linkHasNoVisits(RequestSpecification spec) {
+        final var linkName = "test_name";
+        given(this.useCase.allOf(any(Name.class)))
+            .willReturn(List.of());
 
-        assertThat(error.getMessage())
-            .isNotBlank();
+        List<VisitDto> visits = spec
+            .when().get("/visits/{name}", linkName)
+            .then().statusCode(200)
+            .extract()
+            .body().as(new TypeRef<>() {});
+
+        assertThat(visits)
+            .isEmpty();
     }
-
 
     private List<LinkVisited> existingVisits(final Name name) {
         return List.of(

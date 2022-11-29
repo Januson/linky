@@ -1,9 +1,13 @@
 package linky.web.links;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.micronaut.core.annotation.Introspected;
+
 import org.springframework.hateoas.RepresentationModel;
 
-public class LinkDto extends RepresentationModel<LinkDto> {
+@Introspected
+public class LinkDto {//extends RepresentationModel<LinkDto> {
 
 	private final String name;
 	private final String longUrl;
