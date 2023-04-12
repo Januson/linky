@@ -1,6 +1,7 @@
 plugins {
     java
     jacoco
+    checkstyle
     id("com.adarshr.test-logger")
 }
 
@@ -10,14 +11,29 @@ java {
     modularity.inferModulePath.set(true)
 }
 
-//compileJava {
-//    options.encoding = "UTF-8"
-//    options.compilerArgs << "-parameters"
-//}
-//
-//compileTestJava {
-//    options.encoding = "UTF-8"
-//}
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+    options.compilerArgs.add("-parameters")
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+    }
+}
+
+checkstyle {
+    toolVersion = "8.45.1"
+}
+
+tasks.register("checkstyle") {
+    dependsOn(tasks.checkstyleMain, tasks.checkstyleTest)
+}
 
 tasks.withType<Test> {
     finalizedBy(tasks.jacocoTestReport)

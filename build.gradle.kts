@@ -1,9 +1,4 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.gradle.api.tasks.testing.logging.TestLogEvent
-
 plugins {
-    checkstyle
-    jacoco
     java
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
     id("org.sonarqube") version "4.2.1.3168"
@@ -37,23 +32,9 @@ allprojects {
     apply(plugin = "java")
     apply(plugin = "jacoco")
 
-    jacoco {
-        toolVersion = "0.8.8"
-    }
-
-    tasks.jacocoTestReport {
-        dependsOn(tasks.test)
-        reports {
-            csv.required.set(false)
-            html.required.set(false)
-            xml.required.set(true)
-        }
-    }
-
 }
 
 subprojects {
-    apply(plugin = "checkstyle")
     apply(plugin = "java-library")
 
     repositories {
@@ -68,16 +49,6 @@ subprojects {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
         modularity.inferModulePath.set(true)
-    }
-
-    checkstyle {
-        toolVersion = "8.45.1"
-    }
-
-    tasks.test {
-        finalizedBy(tasks.jacocoTestReport)
-
-        useJUnitPlatform()
     }
 
 }
