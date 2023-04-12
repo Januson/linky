@@ -1,5 +1,7 @@
 plugins {
     java
+    jacoco
+    id("com.adarshr.test-logger")
 }
 
 java {
@@ -16,3 +18,9 @@ java {
 //compileTestJava {
 //    options.encoding = "UTF-8"
 //}
+
+tasks.withType<Test> {
+    finalizedBy(tasks.jacocoTestReport)
+
+    useJUnitPlatform()
+}
