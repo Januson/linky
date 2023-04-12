@@ -21,34 +21,10 @@ sonarqube {
     }
 }
 
-tasks.register("coverage") {
-    dependsOn("jacocoTestReport")
-}
-
-allprojects {
-    group = "linky"
-    version = "1.0-SNAPSHOT"
-
-    apply(plugin = "java")
-    apply(plugin = "jacoco")
-
-}
-
 subprojects {
-    apply(plugin = "java-library")
-
-    repositories {
-        mavenCentral()
-    }
 
     dependencies {
         implementation(platform("org.springframework.boot:spring-boot-dependencies:2.7.2"))
-    }
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-        modularity.inferModulePath.set(true)
     }
 
 }

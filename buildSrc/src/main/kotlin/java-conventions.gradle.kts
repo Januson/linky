@@ -1,8 +1,12 @@
 plugins {
-    java
+    `java-library`
     jacoco
     checkstyle
     id("com.adarshr.test-logger")
+}
+
+repositories {
+    mavenCentral()
 }
 
 java {
