@@ -1,7 +1,7 @@
 plugins {
     java
-    id("io.spring.dependency-management") version "1.0.12.RELEASE"
-    id("org.sonarqube") version "4.2.1.3168"
+    id("io.spring.dependency-management")
+    id("org.sonarqube")
     id("com.diffplug.spotless")
 }
 
