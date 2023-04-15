@@ -1,5 +1,6 @@
 plugins {
     id("com.diffplug.spotless")
+    id("java-conventions")
 }
 
 dependencies {

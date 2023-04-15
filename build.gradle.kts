@@ -20,11 +20,3 @@ sonarqube {
         properties["sonar.login"] = System.getenv("SONAR_TOKEN")
     }
 }
-
-subprojects {
-
-    dependencies {
-        implementation(platform("org.springframework.boot:spring-boot-dependencies:2.7.2"))
-    }
-
-}

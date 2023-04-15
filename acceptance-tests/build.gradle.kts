@@ -1,6 +1,7 @@
 plugins {
     jacoco
     kotlin("jvm") version "1.7.10"
+    id("java-conventions")
 }
 
 repositories {

@@ -4,6 +4,7 @@ plugins {
     application
     id("org.springframework.boot") version "2.7.2"
     id("base-conventions")
+    id("java-conventions")
 }
 
 dependencies {

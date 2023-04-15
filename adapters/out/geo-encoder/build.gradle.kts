@@ -1,5 +1,6 @@
 plugins {
     id("base-conventions")
+    id("java-conventions")
 }
 
 val testcontainersVersion = "1.16.0"
