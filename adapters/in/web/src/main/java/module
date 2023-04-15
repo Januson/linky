@@ -3,6 +3,6 @@
 //    requires com.fasterxml.jackson.annotation;
 //    requires spring.web;
 //    requires spring.context;
-//    requires javax.servlet.api;
+//    requires jakarta.servlet.api;
 //    exports linky.web;
 //}

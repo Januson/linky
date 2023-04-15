@@ -7,7 +7,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Optional;
 import java.util.stream.Stream;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import linky.links.FindLink;
 import linky.links.Ip;
 import linky.links.Link;

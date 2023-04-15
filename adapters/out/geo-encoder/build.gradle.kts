@@ -15,7 +15,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.33.2")
+    testImplementation("com.github.tomakehurst:wiremock-jre8-standalone:2.35.0")
 //    testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
 //    testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
 //    testImplementation("org.testcontainers:mockserver:$testcontainersVersion")

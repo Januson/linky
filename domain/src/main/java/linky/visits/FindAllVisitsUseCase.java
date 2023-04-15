@@ -3,7 +3,7 @@ package linky.visits;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import linky.links.IsNameUsed;
 import linky.links.LinkNotFound;
 import linky.links.LinkVisited;

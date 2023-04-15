@@ -2,7 +2,7 @@ package linky.links;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 @Transactional
 class FindAllLinksUseCase implements FindAllLinks {

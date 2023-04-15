@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.7.2"))
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:3.0.5"))
 }
 
 java {

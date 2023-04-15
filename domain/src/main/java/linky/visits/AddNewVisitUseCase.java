@@ -1,6 +1,6 @@
 package linky.visits;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import linky.links.IsNameUsed;
 import linky.links.LinkNotFound;
 import linky.links.LinkVisited;

@@ -1,7 +1,7 @@
 package linky.links;
 
 import java.util.Optional;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import linky.infrastructure.Events;
 import linky.visits.Origin;
 
