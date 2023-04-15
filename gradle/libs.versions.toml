@@ -1,0 +1,20 @@
+[versions]
+sonarqube = "3.3"
+spotless = "6.9.0"
+spring-boot = "2.7.2"
+spring-dependency = "1.0.12.RELEASE"
+test-logger = "3.2.0"
+
+[libraries]
+sonarqube-plugin-lib = { module = "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin", version.ref = "sonarqube" }
+spotless_plugin_lib = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
+spring-boot-plugin-lib = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
+spring-dependency-plugin-lib = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency" }
+test-logger-plugin-lib = { module = "com.adarshr:gradle-test-logger-plugin", version.ref = "test-logger" }
+
+[plugins]
+sonarqube-plugin = { id = "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin", version.ref = "sonarqube" }
+spotless_plugin = { id = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
+spring-boot-plugin = { id = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
+spring-dependency-plugin = { id = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency" }
+test-logger-plugin = { id = "com.adarshr:gradle-test-logger-plugin", version.ref = "test-logger" }

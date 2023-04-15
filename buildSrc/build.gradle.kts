@@ -8,9 +8,9 @@ repositories {
 }
 
 dependencies {
-    implementation("com.diffplug.spotless:spotless-plugin-gradle:6.9.0")
-    implementation("com.adarshr:gradle-test-logger-plugin:3.2.0")
-    implementation("org.springframework.boot:spring-boot-gradle-plugin:2.7.2")
-    implementation("io.spring.gradle:dependency-management-plugin:1.0.12.RELEASE")
-    implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3")
+    implementation(libs.sonarqube.plugin.lib)
+    implementation(libs.spotless.plugin.lib)
+    implementation(libs.spring.boot.plugin.lib)
+    implementation(libs.spring.dependency.plugin.lib)
+    implementation(libs.test.logger.plugin.lib)
 }
