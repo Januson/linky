@@ -18,7 +18,7 @@ sonarqube {
     properties {
         properties["sonar.host.url"] = "https://sonarcloud.io"
         properties["sonar.organization"] = "januson-github"
-        properties["sonar.projectKey"] = "linky"
+        properties["sonar.projectKey"] = "Januson_linky"
         properties["sonar.login"] = System.getenv("SONAR_TOKEN")
     }
 }
