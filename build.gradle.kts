@@ -6,7 +6,7 @@ plugins {
     jacoco
     java
     id("io.spring.dependency-management") version "1.0.12.RELEASE"
-    id("org.sonarqube") version "3.3"
+    id("org.sonarqube") version "4.2.1.3168"
     id("com.diffplug.spotless")
 }
 
