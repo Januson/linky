@@ -23,6 +23,10 @@ sonarqube {
     }
 }
 
+tasks.register("coverage") {
+    dependsOn("jacocoTestReport")
+}
+
 allprojects {
     group = "linky"
     version = "1.0-SNAPSHOT"
@@ -37,7 +41,9 @@ allprojects {
     tasks.jacocoTestReport {
         dependsOn(tasks.test)
         reports {
-            xml.isEnabled = true
+            csv.required.set(false)
+            html.required.set(false)
+            xml.required.set(true)
         }
     }
 
@@ -56,8 +62,8 @@ subprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
         modularity.inferModulePath.set(true)
     }
 
