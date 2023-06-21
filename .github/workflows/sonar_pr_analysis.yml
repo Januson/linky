@@ -31,7 +31,7 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: dnf --setopt install_weak_deps=False install -y gettext jss unzip
+        run: dnf --setopt install_weak_deps=False install -y gettext jss unzip tree
 
       - name: Check out repository
         uses: actions/checkout@v3
@@ -59,6 +59,9 @@ jobs:
 
       - name: 'Unzip artifact'
         run: unzip unit_test_reports.zip
+
+      - name: 'List artifact'
+        run: tree .
 
       - name: Set up Java
         uses: actions/setup-java@v3
