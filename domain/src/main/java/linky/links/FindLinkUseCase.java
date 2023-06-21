@@ -1,5 +1,6 @@
 package linky.links;
 
+import java.util.Objects;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import linky.infrastructure.Events;
@@ -12,8 +13,8 @@ class FindLinkUseCase implements FindLink {
     private final Events<LinkVisited> events;
 
     FindLinkUseCase(final Links links, final Events<LinkVisited> events) {
-        this.links = links;
-        this.events = events;
+        this.links = Objects.requireNonNull(links);
+        this.events = Objects.requireNonNull(events);
     }
 
     @Override

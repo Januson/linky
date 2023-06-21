@@ -15,6 +15,6 @@ class FindAllLinksUseCase implements FindAllLinks {
 
     @Override
     public List<Link> all() {
-        return this.links.all().collect(Collectors.toList());
+        return this.links.all().toList();
     }
 }
