@@ -77,7 +77,7 @@ jobs:
         with:
           arguments: sonar -x coverage
             -Dsonar.scm.provider=git
-            -Dsonar.coverage.jacoco.xmlReportPaths=**/build/jacoco.xml
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/jacoco.xml
             -Dsonar.pullrequest.key=${{ github.event.workflow_run.pull_requests[0].number }}
             -Dsonar.pullrequest.base=${{ github.event.workflow_run.pull_requests[0].base.ref }}
             -Dsonar.pullrequest.branch=${{ github.event.workflow_run.pull_requests[0].head.ref }}
