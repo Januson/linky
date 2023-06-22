@@ -21,6 +21,17 @@ jobs:
     container:
       image: fedora:38
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Dump sonar vars
+        run: |
+          echo ${{ github.event.pull_request.number }}
+          echo ${{ github.base_ref }}
+          echo ${{ github.head_ref }}
+
       - name: Check out repository
         uses: actions/checkout@v3
 

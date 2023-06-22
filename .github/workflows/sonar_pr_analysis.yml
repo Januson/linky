@@ -29,6 +29,17 @@ jobs:
           echo "::add-mask::${{ secrets.GITHUB_TOKEN }}"
           echo "::add-mask::${{ secrets.SONAR_TOKEN }}"
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: Dump sonar vars
+        run: |
+          echo ${{ github.event.workflow_run.pull_requests[0].number }}
+          echo ${{ github.event.workflow_run.pull_requests[0].base.ref }}
+          echo ${{ github.event.workflow_run.pull_requests[0].head.ref }}
+
       - name: Install dependencies
         shell: bash
         run: dnf --setopt install_weak_deps=False install -y gettext jss git
@@ -42,8 +53,8 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
 
-#      - name: Run sonar
-#        uses: gradle/gradle-build-action@v2
+      - name: Run sonar
+        uses: gradle/gradle-build-action@v2
 
       - name: Run tests
         run: ./gradlew test coverage
