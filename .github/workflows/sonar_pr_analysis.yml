@@ -61,7 +61,10 @@ jobs:
         run: unzip unit_test_reports.zip
 
       - name: 'List artifact'
-        run: tree .
+        run: |
+         ls al .
+         ls al ./build
+         tree .
 
       - name: Set up Java
         uses: actions/setup-java@v3
