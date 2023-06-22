@@ -62,8 +62,8 @@ jobs:
 
       - name: 'List artifact'
         run: |
-         ls al .
-         ls al ./build
+         ls -al .
+         ls -al ./build
          tree .
 
       - name: Set up Java
