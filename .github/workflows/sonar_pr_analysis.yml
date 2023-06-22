@@ -6,7 +6,7 @@ on:
     workflows:
       - Pull request verification
     types:
-      - completed
+      - in_progress
 env:
   JAVA_DISTRIBUTION: 'temurin'
   JAVA_VERSION: '17'
@@ -31,40 +31,10 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: dnf --setopt install_weak_deps=False install -y gettext jss unzip tree git
+        run: dnf --setopt install_weak_deps=False install -y gettext jss
 
       - name: Check out repository
         uses: actions/checkout@v3
-
-      - name: Download test reports
-        uses: actions/github-script@v6
-        with:
-          script: |
-            let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               run_id: context.payload.workflow_run.id,
-            });
-            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
-              return artifact.name == "unit_test_reports"
-            })[0];
-            let download = await github.rest.actions.downloadArtifact({
-               owner: context.repo.owner,
-               repo: context.repo.repo,
-               artifact_id: matchArtifact.id,
-               archive_format: 'zip',
-            });
-            let fs = require('fs');
-            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/unit_test_reports.zip`, Buffer.from(download.data));
-
-      - name: 'Unzip artifact'
-        run: unzip unit_test_reports.zip
-
-      - name: 'List artifact'
-        run: |
-         ls -al .
-         ls -al ./build
-         tree .
 
       - name: Set up Java
         uses: actions/setup-java@v3
@@ -78,9 +48,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          arguments: sonar -x coverage
+          arguments: test coverage sonar
             -Dsonar.scm.provider=git
-            -Dsonar.coverage.jacoco.xmlReportPaths=build/jacoco.xml
             -Dsonar.pullrequest.key=${{ github.event.workflow_run.pull_requests[0].number }}
             -Dsonar.pullrequest.base=${{ github.event.workflow_run.pull_requests[0].base.ref }}
             -Dsonar.pullrequest.branch=${{ github.event.workflow_run.pull_requests[0].head.ref }}

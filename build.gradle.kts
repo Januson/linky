@@ -44,7 +44,6 @@ allprojects {
             csv.required.set(false)
             html.required.set(false)
             xml.required.set(true)
-            xml.outputLocation.set(layout.buildDirectory.file("jacoco.xml"))
         }
     }
 
