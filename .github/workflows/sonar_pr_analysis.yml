@@ -45,11 +45,14 @@ jobs:
       - name: Run sonar
         uses: gradle/gradle-build-action@v2
 
+      - name: Run tests
+        run: ./gradlew test coverage
+
       - name: Run sonar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew test coverage sonar
+        run: ./gradlew sonar -x test -x coverage
           -Dsonar.log.level=TRACE
           -Dsonar.verbose=true
           -Dsonar.scm.provider=git
