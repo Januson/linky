@@ -44,5 +44,5 @@ jobs:
         with:
           name: unit_test_reports
           path: |
-            **/build/**/*
+            **/build/jacoco.xml
 #            **/build/jacoco/test.exec
