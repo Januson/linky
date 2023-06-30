@@ -10,9 +10,9 @@ env:
   JAVA_VERSION: '17'
 
 # Cancel in-progress PR verification workflows. We only care about verifying the latest commit.
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
+#concurrency:
+#  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+#  cancel-in-progress: true
 
 jobs:
   unit_tests:
