@@ -53,11 +53,16 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: Run sonar
+      - name: Setup gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Run tests
+      - name: Run tests and coverage
         run: ./gradlew test coverage
+
+      - name: Echo coverage
+        run: |
+          ls -al **/build/reports/jacoco/test
+          cat **/build/reports/jacoco/test/jacocoTestReport.xml
 
       - name: Run sonar
         env:
