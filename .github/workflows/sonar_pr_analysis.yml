@@ -42,7 +42,7 @@ jobs:
 
       - name: Install dependencies
         shell: bash
-        run: dnf --setopt install_weak_deps=False install -y gettext jss git
+        run: dnf --setopt install_weak_deps=False install -y gettext jss git tree
 
       - name: Check out repository
         uses: actions/checkout@v3
@@ -59,10 +59,14 @@ jobs:
       - name: Run tests and coverage
         run: ./gradlew test coverage
 
-      - name: Echo coverage
-        run: |
-          ls -al **/build/reports/jacoco/test
-          cat **/build/reports/jacoco/test/jacocoTestReport.xml
+      - name: Project tree
+        run: tree
+
+      - name: List coverage files
+        run: ls -al **/build/reports/jacoco/test
+
+      - name: Print coverage report
+        run: cat **/build/reports/jacoco/test/jacocoTestReport.xml
 
       - name: Run sonar
         env:
