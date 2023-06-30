@@ -46,6 +46,12 @@ jobs:
 
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          # checkout commit that triggered this workflow
+          ref: ${{ github.event.workflow_run.pull_requests[0].head.ref }}
+          # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
 
       - name: Set up Java
         uses: actions/setup-java@v3
