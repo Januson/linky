@@ -1,9 +1,18 @@
-version: 2
+version: 2.1
+
+workflows:
+  pipeline:
+    jobs:
+      - test
+
+executors:
+  openjdk:
+    docker:
+      - image: cimg/openjdk:21.0
 
 jobs:
   test:
-    docker:
-      - image: cimg/openjdk:21.0
+    executor: openjdk
     steps:
       - checkout
       - restore_cache:
@@ -11,17 +20,10 @@ jobs:
             - v1-dependencies-{{ checksum "build.gradle" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      - run: gradle dependencies
+      - run: ./gradlew dependencies
       - save_cache:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
-      - run: gradle test
-      - run: gradle sonarqube -Dsonar.verbose=true
-
-
-workflows:
-  version: 2
-  pipeline:
-    jobs:
-      - test
+      - run: ./gradlew test
+      - run: ./gradlew sonarqube -Dsonar.verbose=true
