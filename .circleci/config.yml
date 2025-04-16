@@ -14,7 +14,7 @@ commands:
   restore-gradle-cache:
     steps:
       - restore_cache:
-          keys: |
+          keys:
             - gradle-v1-{{ .Branch }}-{{ checksum "gradle/libs.versions.toml" }}
             - gradle-v1-{{ .Branch }}-
             - gradle-v1-
