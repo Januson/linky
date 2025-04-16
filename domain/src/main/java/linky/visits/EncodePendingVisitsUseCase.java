@@ -2,7 +2,7 @@ package linky.visits;
 
 import java.util.Collections;
 import java.util.List;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 @Transactional
 class EncodePendingVisitsUseCase implements EncodePendingVisits {

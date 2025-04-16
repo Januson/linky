@@ -1,0 +1,36 @@
+version: 2.1
+
+workflows:
+  pipeline:
+    jobs:
+      - test
+
+executors:
+  openjdk:
+    docker:
+      - image: cimg/openjdk:21.0
+
+commands:
+  restore-gradle-cache:
+    steps:
+      - restore_cache:
+          keys: |
+            - gradle-v1-{{ .Branch }}-{{ checksum "gradle/libs.versions.toml" }}
+            - gradle-v1-{{ .Branch }}-
+            - gradle-v1-
+
+  save-gradle-cache:
+    steps:
+      - save_cache:
+          key: gradle-v1-{{ .Branch }}-{{ checksum "gradle/libs.versions.toml" }}
+          paths:
+            - ~/.gradle
+
+jobs:
+  test:
+    executor: openjdk
+    steps:
+      - checkout
+      - restore-gradle-cache
+      - run: ./gradlew test sonarqube -Dsonar.verbose=true
+      - save-gradle-cache

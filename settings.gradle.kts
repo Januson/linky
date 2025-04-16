@@ -1,4 +1,5 @@
 rootProject.name = "linky"
+
 include(":adapters:in:jobs")
 include(":adapters:in:web")
 include(":adapters:out:events")

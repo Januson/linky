@@ -2,7 +2,7 @@ package linky.links;
 
 import java.util.List;
 import java.util.UUID;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import linky.links.validation.CompositeValidator;
 
 @Transactional

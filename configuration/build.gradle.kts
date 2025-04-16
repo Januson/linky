@@ -2,8 +2,9 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 plugins {
     application
-    id("org.springframework.boot") version "2.7.2"
+    id("org.springframework.boot")
     id("base-conventions")
+    id("java-conventions")
 }
 
 dependencies {
@@ -14,7 +15,7 @@ dependencies {
     implementation(project(":adapters:out:geo-encoder"))
     implementation(project(":adapters:out:persistence"))
 
-    implementation("javax.servlet:javax.servlet-api");
+    implementation("jakarta.servlet:jakarta.servlet-api");
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -35,9 +36,9 @@ application {
 springBoot {
     buildInfo {
         properties {
-            artifact = artifactName
-            version = appName
-            name = rootProject.name
+            artifact.set(artifactName)
+            version.set(appName)
+            name.set(rootProject.name)
         }
     }
 }
@@ -65,5 +66,5 @@ tasks {
 }
 
 tasks.getByName<BootBuildImage>("bootBuildImage") {
-    imageName = "linky.org/$appName"
+    imageName.set("linky.org/$appName")
 }
